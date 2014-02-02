@@ -55,3 +55,6 @@ Icon
 Session.vim
 .netrwhist
 *~
+
+# ignore SVN
+.svn/
