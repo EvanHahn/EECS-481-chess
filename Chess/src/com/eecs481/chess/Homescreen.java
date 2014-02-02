@@ -1,19 +1,36 @@
 package com.eecs481.chess;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.Button;
+import ask.scanninglibrary.ASKActivity;
+
 import com.parse.ParseUser;
 
-public class Homescreen extends Activity {
+public class Homescreen extends ASKActivity {
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
-      super.onCreate(savedInstanceState);
-      setContentView(R.layout.activity_homescreen);
-
-      m_activityContext = this;
+	  super.onCreate(savedInstanceState);
+	  setContentView(R.layout.activity_homescreen);
+	
+	  m_activityContext = this; 
+	  m_gameList = new GameListManager(this);
+	  m_newGameButton = (Button) findViewById(R.id.newGameButton);
+	  
+	  
+	  m_newGameButton.setOnClickListener(new OnClickListener(){
+		@Override
+		public void onClick(View arg0) {
+			Intent intent = new Intent(Homescreen.this, NewGameActivity.class);
+			startActivity(intent);
+		}
+	  });
    }
 
 
@@ -39,4 +56,7 @@ public class Homescreen extends Activity {
    }
 
    private Activity m_activityContext;
+   private Button m_newGameButton;
+   private GameListManager m_gameList;
+   private int mCurPage = 0;
 }
