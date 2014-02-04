@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import ask.scanninglibrary.ASKActivity;
-
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -21,7 +20,7 @@ import com.parse.SignUpCallback;
  * 
  * @author Jake Korona
  */
-public class RegisterActivity extends Activity {
+public class RegisterActivity extends ASKActivity {
 
    //////////////////////////////////////////////////////////////////////////
    // Public fields
