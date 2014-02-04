@@ -7,3 +7,9 @@ Getting this puppy set up:
     # make sure you have access to the ASK Scanning Library
     git submodule init
     git submodule update
+
+Updating ASK:
+
+    cd ASKScanningLibrary
+    git checkout master
+    git pull
