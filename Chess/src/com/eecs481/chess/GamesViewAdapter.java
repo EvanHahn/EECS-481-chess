@@ -38,5 +38,7 @@ public class GamesViewAdapter extends ASKAdapter<String> {
 		textView.setText(getItem(position));
 		
 		return rowView;
+		
 	}
+
 }

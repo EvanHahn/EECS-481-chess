@@ -1,19 +1,23 @@
 package com.eecs481.chess;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Hashtable;
-import java.util.TreeSet;
+import java.util.List;
 
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.AdapterView.OnItemClickListener;
 
 
 public class GameListManager {
+	
+	public static final int GAMES_PER_PAGE = 10;
 	
 	public GameListManager(final Homescreen homeScreen) {
 		mActivity = homeScreen;
@@ -33,26 +37,46 @@ public class GameListManager {
 		((Button) mActivity.findViewById(R.id.nextPageButton)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mAdapter.nextPage();
+				setPage(mCurPage + 1);
 			} 
 		});
 		
 		((Button) mActivity.findViewById(R.id.previousPageButton)).setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				mListView.smoothScrollToPosition(mListView.getFirstVisiblePosition());
+				setPage(mCurPage - 1);
 			} 
 		});
-
 		
-		getGames();
+		new GetGamesPagesTask().execute();
+
 	}
 	
-	private void getGames() {
-		mGames.clear();
+	private class GetGamesPagesTask extends AsyncTask<Void, Void, Void> {
+	     protected Void doInBackground(Void... args) {
+	    	 mGames.clear();
+	 		 queryForGames();
+	    	 return null;
+	     }
+	     
+	     protected void onPostExecute(Void arg) {
+	    	 setUpPages();
+	     }
+	 }	
+	
+	private void setPage(int pageNum) {
+		if (pageNum < 0) {
+			pageNum = 0;
+		} else {
+			pageNum = Math.min(mPages.size() - 1, pageNum);
+		}
+		
+		mCurPage = pageNum;
+		
 		mAdapter.clear();
-		queryForGames();
-		mAdapter.addAll(getSortedGames());
+		if (pageNum < mPages.size()) {
+			mAdapter.addAll(mPages.get(pageNum));
+		}
 		mAdapter.notifyDataSetChanged();
 	}
 	
@@ -62,6 +86,7 @@ public class GameListManager {
 		mGames.put("game1", "game1_name");
 		mGames.put("game2", "game2_name");
 		mGames.put("game3", "game3_name");
+
 		mGames.put("game4", "game4_name");
 		mGames.put("game5", "game5_name");
 		mGames.put("game6", "game6_name");
@@ -79,21 +104,39 @@ public class GameListManager {
 		mGames.put("game18", "game18_name");
 		mGames.put("game19", "game19_name");
 		mGames.put("game20", "game20_name");
+
+		
+		mFullList.addAll(mGames.values());
+		Collections.sort(mFullList);
 	}
 	
-	//this will end up sorting by some other criteria
-	private Collection<String> getSortedGames() {
+	private void setUpPages() {
+		mPages = chopList(mFullList, GAMES_PER_PAGE);
 		
-		TreeSet<String> result = new TreeSet<String>();
-				
-		result.addAll(mGames.values());
-		
-		return result;
+		if (!mPages.isEmpty()) {
+	    	 mAdapter.clear();
+	 		 mAdapter.addAll(mPages.get(0));
+			 mAdapter.notifyDataSetChanged();
+		}
+	}
+	
+	private <T> List<List<T>> chopList(List<T> list, final int L) {
+	    List<List<T>> parts = new ArrayList<List<T>>();
+	    final int N = list.size();
+	    for (int i = 0; i < N; i += L) {
+	        parts.add(new ArrayList<T>(
+	            list.subList(i, Math.min(N, i + L)))
+	        );
+	    }
+	    return parts;
 	}
 	
 	
 	private GamesViewAdapter mAdapter;
 	private Homescreen mActivity;
 	private ListView mListView;
+	private int mCurPage = 0;
 	private Hashtable<String, String> mGames = new Hashtable<String, String>();
+	private ArrayList<String> mFullList = new ArrayList<String>();
+	private List<List<String>> mPages;
 }

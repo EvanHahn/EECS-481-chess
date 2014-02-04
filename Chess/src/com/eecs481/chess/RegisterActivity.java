@@ -21,7 +21,7 @@ import com.parse.SignUpCallback;
  * 
  * @author Jake Korona
  */
-public class RegisterActivity extends ASKActivity {
+public class RegisterActivity extends Activity {
 
    //////////////////////////////////////////////////////////////////////////
    // Public fields

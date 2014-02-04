@@ -58,5 +58,4 @@ public class Homescreen extends ASKActivity {
    private Activity m_activityContext;
    private Button m_newGameButton;
    private GameListManager m_gameList;
-   private int mCurPage = 0;
 }

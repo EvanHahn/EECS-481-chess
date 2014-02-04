@@ -6,8 +6,10 @@
 
     <TextView
         android:id="@+id/text_view"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="testing" />
+        android:gravity="center"
+        android:text="testing"
+        android:textSize="@dimen/games_text_size" />
 
 </LinearLayout>

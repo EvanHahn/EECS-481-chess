@@ -10,14 +10,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="@string/new_game" />
+        android:text="@string/new_game"
+        android:textSize="@dimen/games_text_size" />
 
 	<ListView
-        android:id="@+id/gamesListView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="1dp"
-        android:layout_weight="1.39" >
+	    android:id="@+id/gamesListView"
+	    android:layout_width="match_parent"
+	    android:layout_height="0dp"
+	    android:layout_marginTop="1dp"
+	    android:layout_weight="1.39"
+	    android:divider="#C5C5C5"
+	    android:dividerHeight="2dp"
+	    android:textSize="@dimen/games_text_size" >
 
     </ListView>
     
@@ -28,12 +32,13 @@
         android:orientation="horizontal" >
         
 	    <Button
-            android:id="@+id/previousPageButton"
-            style="?android:attr/buttonBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/previous_page"/>
+	        android:id="@+id/previousPageButton"
+	        style="?android:attr/buttonBarStyle"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_weight="0.99"
+	        android:text="@string/previous_page"
+	        android:textSize="@dimen/games_text_size" />
 
         <Button
             android:id="@+id/nextPageButton"
@@ -41,7 +46,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/next_page"/>
+            android:text="@string/next_page"
+            android:textSize="@dimen/games_text_size"/>
 
     </LinearLayout>
     

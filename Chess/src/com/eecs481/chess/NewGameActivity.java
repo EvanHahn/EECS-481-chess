@@ -1,15 +1,16 @@
 package com.eecs481.chess;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.Menu;
+import ask.scanninglibrary.ASKActivity;
 
-public class NewGameActivity extends Activity {
+public class NewGameActivity extends ASKActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_game);
+		
 	}
 
 	@Override
