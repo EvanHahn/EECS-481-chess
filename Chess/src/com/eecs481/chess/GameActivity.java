@@ -17,7 +17,7 @@ public class GameActivity extends Activity {
 
 		webView = (WebView) findViewById(R.id.game_view);
 		webView.getSettings().setJavaScriptEnabled(true);
-		webView.loadUrl("http://www.google.com");
+		webView.loadUrl("file:///android_asset/game.html");
 
 	}
 
