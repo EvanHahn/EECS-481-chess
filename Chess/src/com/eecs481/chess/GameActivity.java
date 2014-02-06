@@ -17,7 +17,9 @@ public class GameActivity extends Activity {
 
 		webView = (WebView) findViewById(R.id.game_view);
 		webView.getSettings().setJavaScriptEnabled(true);
-		webView.loadUrl("file:///android_asset/game.html");
+		webView.loadUrl("file:///android_asset/game/index.html");
+
+		setTitle("Pass-and-play");
 
 	}
 
