@@ -32,6 +32,9 @@
         <activity
             android:name="com.eecs481.chess.GameActivity"
             android:label="@string/title_activity_game" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.eecs481.chess.NewGameActivity"

@@ -3,13 +3,24 @@ package com.eecs481.chess;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.webkit.WebView;
 
 public class GameActivity extends Activity {
 
+	private WebView webView;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_game);
+		setContentView(R.layout.game_view);
+
+		webView = (WebView) findViewById(R.id.game_view);
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.loadUrl("file:///android_asset/game/index.html");
+
+		setTitle("Pass-and-play");
+
 	}
 
 	@Override
