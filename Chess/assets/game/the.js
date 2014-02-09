@@ -7,6 +7,7 @@ var board = new ChessBoard('board', {
 	position: 'start',
 	showNotation: false,
 	pieceTheme: 'vendor/chesspieces/{piece}.png',
+	onChange: highlightLegalSquares
 });
 
 var removeGreySquares = function() {
@@ -24,7 +25,22 @@ var greySquare = function(square) {
   squareEl.css('background', background);
 };
 
-$('#board div[class^="square-"]').on('click', function() {
+var $squares = $('#board div[class^="square-"]');
+
+function highlightLegalSquares() {
+	$squares.each(function() {
+		var source = $(this).data('square');
+		if (game.moves({ square: source }).length) {
+			$(this).css('box-shadow', 'inset 0 0 10px red');
+		} else {
+			$(this).css('box-shadow', 'none');
+		}
+	});
+}
+
+highlightLegalSquares();
+
+$squares.on('click', function() {
 
 	var source = $(this).data('square');
 	var piece = game.get(source);
