@@ -1,8 +1,9 @@
 package com.eecs481.chess;
 
-import android.os.Bundle;
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.Menu;
+import android.widget.TextView;
 
 public class GameActivity extends Activity {
 
@@ -10,6 +11,12 @@ public class GameActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_game);
+		
+		TextView testing = (TextView)findViewById(R.id.game_test);
+		String demo = Homescreen.active_game.getString(Consts.P1_FIELD)
+				+ " " + Homescreen.active_game.getString(Consts.P2_FIELD)
+				+ " " + Homescreen.active_game.getString(Consts.STATUS_FIELD);
+		testing.setText(demo);
 	}
 
 	@Override

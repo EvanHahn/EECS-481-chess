@@ -1,23 +1,53 @@
 package com.eecs481.chess;
 
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.View.OnTouchListener;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import ask.scanninglibrary.views.ASKAdapter;
 import ask.scanninglibrary.ASKActivity;
 
-public class GamesViewAdapter extends ASKAdapter<String> {
+public class GamesViewAdapter extends ASKAdapter<GameInfo> {
+	
 	public GamesViewAdapter(ASKActivity context, ListView listView) {
 		super(context, R.layout.games_list_row, listView);
 	}
 	
-	@Override
-	public View getView(int position, View convertView, final ViewGroup parent) {
+	public GamesViewAdapter(ASKActivity context, int resource,
+			int textViewResourceId, List<GameInfo> objects,
+			AdapterView<?> view) {
+		super(context, resource, textViewResourceId, objects, view);
+	}
+	
+	public GamesViewAdapter(ASKActivity context, int resource,
+			List<GameInfo> objects, AdapterView<?> view) {
+		super(context, resource, objects, view);
+	}
+
+	public GamesViewAdapter(ASKActivity context, int resource,
+			GameInfo[] objects, AdapterView<?> view) {
+		super(context, resource, objects, view);
+	}
+	
+	public GamesViewAdapter(ASKActivity context, int resource,
+			AdapterView<?> view) {
+		super(context, resource, view);
+	}
+	
+	public GamesViewAdapter(ASKActivity context, int resource,
+			int textViewResourceId, GameInfo[] objects, AdapterView<?> view) {
+		super(context, resource, textViewResourceId, objects, view);
+	}
+	
+
+	public View askGetView(int position, View convertView, final ViewGroup parent) {
 		
 		LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		View rowView = inflater.inflate(R.layout.games_list_row, parent, false);
@@ -34,8 +64,11 @@ public class GamesViewAdapter extends ASKAdapter<String> {
 			}
 		});
 		
-		TextView textView = (TextView) rowView.findViewById(R.id.text_view);
-		textView.setText(getItem(position));
+		TextView textViewOpponent = (TextView) rowView.findViewById(R.id.glist_row_text_view1);
+		TextView textViewStatus = (TextView) rowView.findViewById(R.id.glist_row_text_view2);
+		
+		textViewOpponent.setText(getItem(position).opponent);
+		textViewStatus.setText(getItem(position).status);
 		
 		return rowView;
 		

@@ -16,5 +16,12 @@
     <style name="AppTheme" parent="AppBaseTheme">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
     </style>
+    <color name="games_text_color">#0099cc</color>
+    <color name="background_received">#ffffff</color>
+    <color name="background_homescreen">#ffffff</color>
+    <color name="text_sent">#FFFFFF</color>
+    <color name="background_sent">#0099cc</color>
+    <color name="text_received">#0099cc</color>
+    <color name="color_light_blue">#0099cc</color>
 
 </resources>
