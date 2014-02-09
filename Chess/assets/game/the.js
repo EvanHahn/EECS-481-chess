@@ -24,7 +24,7 @@ var greySquare = function(square) {
   squareEl.css('background', background);
 };
 
-$('div[class^="square-"]').on('click', function() {
+$('#board div[class^="square-"]').on('click', function() {
 
 	var source = $(this).data('square');
 	var piece = game.get(source);
