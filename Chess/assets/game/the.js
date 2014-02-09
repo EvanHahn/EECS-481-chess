@@ -4,26 +4,67 @@ var boardWidth = Math.min($(window).width(), $(window).height());
 $('#board').css('width', boardWidth);
 
 var board = new ChessBoard('board', {
-  draggable: true,
 	position: 'start',
 	showNotation: false,
 	pieceTheme: 'vendor/chesspieces/{piece}.png',
-	onDragStart: function(source, piece) {
-		if (game.game_over() ||
-		   (game.turn() === 'w' && piece.search(/^b/) !== -1) ||
-		   (game.turn() === 'b' && piece.search(/^w/) !== -1)) {
-			return false;
-		}
-	},
-	onDrop: function(source, target) {
+});
+
+var removeGreySquares = function() {
+  $('#board .square-55d63').css('background', '');
+};
+
+var greySquare = function(square) {
+  var squareEl = $('#board .square-' + square);
+
+  var background = '#a9a9a9';
+  if (squareEl.hasClass('black-3c85d') === true) {
+    background = '#696969';
+  }
+
+  squareEl.css('background', background);
+};
+
+$('div[class^="square-"]').on('click', function() {
+
+	var source = $(this).data('square');
+	var piece = game.get(source);
+
+	if (board.currentPiece) {
+
 		var move = game.move({
-			from: source,
-			to: target,
-			promotion: 'q' // NOTE: always promote to a queen
+			from: board.currentPiece,
+			to: source,
+			promotion: 'q' // TODO add UI for this
 		});
-		if (move === null) return 'snapback';
-	},
-	onSnapEnd: function() {
+
 		board.position(game.fen());
+
+		removeGreySquares();
+		delete board.currentPiece;
+
+	} else {
+
+		var moves = game.moves({
+			square: source,
+			verbose: true
+		});
+
+		if (game.game_over() ||
+		  (!piece) ||
+		  (game.turn() === 'w' && piece.color !== game.WHITE) ||
+		  (game.turn() === 'b' && piece.color !== game.BLACK) ||
+		  (moves.length === 0)) {
+		  return false;
+		}
+
+		moves.forEach(function(move) {
+			greySquare(move.to);
+		});
+
+		board.currentPiece = source;
+
 	}
+
+	return false;
+
 });
