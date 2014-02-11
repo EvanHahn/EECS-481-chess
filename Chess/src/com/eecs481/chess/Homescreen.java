@@ -2,6 +2,7 @@ package com.eecs481.chess;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -10,14 +11,18 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import ask.scanninglibrary.ASKActivity;
 
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 public class Homescreen extends ASKActivity {
+	
+   public static ParseObject active_game;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {
 	  super.onCreate(savedInstanceState);
 	  setContentView(R.layout.activity_homescreen);
+	  setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);//
 	
 	  m_activityContext = this; 
 	  m_gameList = new GameListManager(this);
@@ -31,6 +36,13 @@ public class Homescreen extends ASKActivity {
 			startActivity(intent);
 		}
 	  });
+   }
+   
+   @Override
+   protected void onResume() {
+	   super.onResume();
+	   
+	   m_gameList.findUserGames();
    }
 
 
