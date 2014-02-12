@@ -49,7 +49,7 @@ public class Homescreen extends ASKActivity {
             aad.setButton(AlertDialog.BUTTON_POSITIVE, "Pass and Play", new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int whichButton) {
-                  startActivity(new Intent(Homescreen.this, GameActivity.class));
+                  startActivity(new Intent(m_activityContext, GameActivity.class));
                }
             });
             //            aad.setButton(AlertDialog.BUTTON_NEGATIVE, "Search", new DialogInterface.OnClickListener() {
