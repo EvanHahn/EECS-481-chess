@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import ask.scanninglibrary.ASKActivity;
+import ask.scanninglibrary.views.ASKAlertDialog;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -42,50 +43,52 @@ public class Homescreen extends ASKActivity {
                      android.R.layout.simple_dropdown_item_1line, m_friends);
             input.setAdapter(adapter);
 
-            new AlertDialog.Builder(m_activityContext)
-            .setTitle("New Game")
-            .setView(input)
-            .setPositiveButton("Pass and Play", new DialogInterface.OnClickListener() {
+            ASKAlertDialog aad = new ASKAlertDialog(m_activityContext);
+            aad.setTitle("New Game");
+            aad.setView(input);
+            aad.setButton(AlertDialog.BUTTON_POSITIVE, "Pass and Play", new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int whichButton) {
                   startActivity(new Intent(Homescreen.this, GameActivity.class));
                }
-               //            }).setNegativeButton("Search", new DialogInterface.OnClickListener() {
-               //               @Override
-               //               public void onClick(DialogInterface dialog, int whichButton) {
-               //                  String name = input.getText().toString();
-               //                  if (name.isEmpty())
-               //                     return;
-               //                  Log.i("Homescreen", "Searching for user: " + name);
-               //
-               //                  final List<String> userList = new ArrayList<String>();
-               //                  ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-               //                  query.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-               //                  query.whereEqualTo("username", name);
-               //                  query.findInBackground(new FindCallback<ParseObject>() {
-               //                     @Override
-               //                     public void done(List<ParseObject> users, ParseException pe) {
-               //                        if (pe == null) {
-               //                           for (ParseObject user : users) {
-               //                              Log.i("Homescreen", "Adding friend: " + user.getString("username"));
-               //                              userList.add(user.getString("username"));
-               //                           }
-               //                        }
-               //                        else {
-               //                           Log.e("Homescreen", "Error: " + pe.getMessage());
-               //                        }
-               //                     }
-               //                  });
-               //
-               //                  for (String un : userList)
-               //                     Log.i("Homescreen", "Users: " + un);
-               //
-               //                  if (!userList.isEmpty()) {
-               //                     Log.i("Homescreen", "Adding friend: " + name);
-               //                     saveFriends(userList);
-               //                  }
-               //               }
-            }).show();
+            });
+            //            aad.setButton(AlertDialog.BUTTON_NEGATIVE, "Search", new DialogInterface.OnClickListener() {
+            //               @Override
+            //               public void onClick(DialogInterface dialog, int whichButton) {
+            //                  String name = input.getText().toString();
+            //                  if (name.isEmpty())
+            //                     return;
+            //                  Log.i("Homescreen", "Searching for user: " + name);
+            //
+            //                  final List<String> userList = new ArrayList<String>();
+            //                  ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+            //                  query.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
+            //                  query.whereEqualTo("username", name);
+            //                  query.findInBackground(new FindCallback<ParseObject>() {
+            //                     @Override
+            //                     public void done(List<ParseObject> users, ParseException pe) {
+            //                        if (pe == null) {
+            //                           for (ParseObject user : users) {
+            //                              Log.i("Homescreen", "Adding friend: " + user.getString("username"));
+            //                              userList.add(user.getString("username"));
+            //                           }
+            //                        }
+            //                        else {
+            //                           Log.e("Homescreen", "Error: " + pe.getMessage());
+            //                        }
+            //                     }
+            //                  });
+            //
+            //                  for (String un : userList)
+            //                     Log.i("Homescreen", "Users: " + un);
+            //
+            //                  if (!userList.isEmpty()) {
+            //                     Log.i("Homescreen", "Adding friend: " + name);
+            //                     saveFriends(userList);
+            //                  }
+            //               }
+            //            });
+            aad.show();
          }
       });
 
