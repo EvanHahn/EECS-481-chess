@@ -11,4 +11,16 @@ public class Consts {
 	public static final String STATUS_FIELD = "gameStatus";
 	
 	public static final String CUR_GAME_FIELD = "gameHistory";
+	
+	
+	
+	
+	public static final String GAME_PARAMS = "gameParams";
+	
+	public static final String PNP = "passAndPlay";
+	
+	public static final String NETWORK = "network";
+	
+	
+	public static final String NEW_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 }

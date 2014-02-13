@@ -1,19 +1,23 @@
 package com.eecs481.chess;
 
-import com.parse.ParseUser;
+import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
-import android.widget.Toast;
+
+import com.parse.ParseUser;
 
 public class GameActivity extends Activity {
 
 	private WebView webView;
+	private ArrayList<String> mGameParams;
+	private Boolean pnpGame = true;
 
 	private class Ferry { // the "bridge" between real Android and JavaScript
 
@@ -30,22 +34,43 @@ public class GameActivity extends Activity {
 
 		@JavascriptInterface
 		public String getPlayer1() {
-			return Homescreen.active_game.getString(Consts.P1_FIELD);
+			if (!pnpGame) {
+				return mGameParams.get(1);
+			} else {
+				return "";
+			}
 		}
 
 		@JavascriptInterface
 		public String getPlayer2() {
-			return Homescreen.active_game.getString(Consts.P2_FIELD);
+			if (!pnpGame) {
+				return mGameParams.get(2);
+			} else {
+				return "";
+			}
+		}
+		
+		@JavascriptInterface
+		public String getGameStatus() {
+			if (!pnpGame) {
+				return mGameParams.get(3);
+			} else {
+				return "";
+			}
 		}
 
 		@JavascriptInterface
 		public Boolean getIsPassAndPlay() {
-			return false;
+			return pnpGame;
 		}
 
 		@JavascriptInterface
 		public String getBoardState() {
-			return "rnbqkbnr/pp1ppppp/8/2p5/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2";
+			if (!pnpGame) {
+				return mGameParams.get(4);
+			} else {
+				return "";
+			}
 		}
 
 	}
@@ -62,8 +87,18 @@ public class GameActivity extends Activity {
 		webView.getSettings().setJavaScriptEnabled(true);
 		webView.addJavascriptInterface(new Ferry(this), "ferry");
 		webView.loadUrl("file:///android_asset/game/index.html");
-
-		setTitle("Pass-and-play");
+		
+		Intent intent = getIntent();
+		
+		mGameParams = intent.getStringArrayListExtra(Consts.GAME_PARAMS);
+		
+		if (mGameParams.get(0).equals(Consts.PNP)) {
+			setTitle("Pass-and-play");
+			pnpGame = true;
+		} else {
+			setTitle("Network");
+			pnpGame = false;
+		}
 
 	}
 

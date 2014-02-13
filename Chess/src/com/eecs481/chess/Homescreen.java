@@ -20,8 +20,6 @@ import com.parse.ParseUser;
 
 public class Homescreen extends ASKActivity {
 
-   public static ParseObject active_game;
-
    @Override
    protected void onCreate(Bundle savedInstanceState) {
       super.onCreate(savedInstanceState);
