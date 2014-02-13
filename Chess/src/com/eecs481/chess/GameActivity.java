@@ -31,11 +31,21 @@ public class GameActivity extends Activity {
 		public String getCurrentUser() {
 			return ParseUser.getCurrentUser().getUsername();
 		}
+		
+		@JavascriptInterface
+		public String getObjectId() {
+			if (!pnpGame) {
+				return mGameParams.get(1);
+			} else {
+				return "";
+			}
+		}
+
 
 		@JavascriptInterface
 		public String getPlayer1() {
 			if (!pnpGame) {
-				return mGameParams.get(1);
+				return mGameParams.get(2);
 			} else {
 				return "";
 			}
@@ -44,7 +54,7 @@ public class GameActivity extends Activity {
 		@JavascriptInterface
 		public String getPlayer2() {
 			if (!pnpGame) {
-				return mGameParams.get(2);
+				return mGameParams.get(3);
 			} else {
 				return "";
 			}
@@ -53,7 +63,7 @@ public class GameActivity extends Activity {
 		@JavascriptInterface
 		public String getGameStatus() {
 			if (!pnpGame) {
-				return mGameParams.get(3);
+				return mGameParams.get(4);
 			} else {
 				return "";
 			}
@@ -67,9 +77,9 @@ public class GameActivity extends Activity {
 		@JavascriptInterface
 		public String getBoardState() {
 			if (!pnpGame) {
-				return mGameParams.get(4);
+				return mGameParams.get(5);
 			} else {
-				return "";
+				return Consts.NEW_BOARD;
 			}
 		}
 

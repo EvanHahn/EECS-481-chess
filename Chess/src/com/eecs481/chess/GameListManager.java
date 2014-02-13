@@ -46,11 +46,12 @@ public class GameListManager {
 			    ParseObject game = mGames.get(mFullList.get(position - 1).id);
 			    
 			    gameParams.add(Consts.NETWORK);
+			    gameParams.add(game.getObjectId());
 			    gameParams.add(game.getString(Consts.P1_FIELD));
 			    gameParams.add(game.getString(Consts.P2_FIELD));
 			    gameParams.add(game.getString(Consts.STATUS_FIELD));
-			    //gameParams.add(game.getString(Consts.CUR_GAME_FIELD));
-			    gameParams.add(Consts.NEW_BOARD);
+			    gameParams.add(game.getString(Consts.CUR_GAME_FIELD));
+			    //gameParams.add(Consts.NEW_BOARD);
 			    
 			    
 			    intent.putExtra(Consts.GAME_PARAMS, gameParams);
@@ -104,12 +105,12 @@ public class GameListManager {
 			String player2Name = pObj.getString(Consts.P2_FIELD);
 			String gameStatus = pObj.getString(Consts.STATUS_FIELD);
 			
-			//gameStatus = (gameStatus.equals(currentUser.getUsername())) ? "Your Turn" : "Opponent's Turn";
+			String displayStatus = (gameStatus.equals(currentUser.getUsername())) ? "Your Turn" : "Opponent's Turn";
 			
 			if (player1Name.equals(currentUser.getUsername())) {
-				mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, gameStatus));
+				mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, displayStatus));
 			} else {
-				mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, gameStatus));
+				mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, displayStatus));
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 package com.eecs481.chess;
 
+import java.util.ArrayList;
 import java.util.List;
+
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,6 +17,7 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import ask.scanninglibrary.ASKActivity;
 import ask.scanninglibrary.views.ASKAlertDialog;
+
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
@@ -47,7 +50,11 @@ public class Homescreen extends ASKActivity {
             aad.setButton(AlertDialog.BUTTON_POSITIVE, "Pass and Play", new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int whichButton) {
-                  startActivity(new Intent(m_activityContext, GameActivity.class));
+            	   Intent intent = new Intent(m_activityContext, GameActivity.class);
+            	   ArrayList<String> gameParams = new ArrayList<String>();
+            	   gameParams.add(Consts.PNP);
+            	   intent.putExtra(Consts.GAME_PARAMS, gameParams);
+            	   startActivity(intent);
                }
             });
             //            aad.setButton(AlertDialog.BUTTON_NEGATIVE, "Search", new DialogInterface.OnClickListener() {
