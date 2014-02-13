@@ -46,7 +46,7 @@ public class GamesViewAdapter extends ASKAdapter<GameInfo> {
 		super(context, resource, textViewResourceId, objects, view);
 	}
 	
-
+	@Override
 	public View askGetView(int position, View convertView, final ViewGroup parent) {
 		
 		LayoutInflater inflater = (LayoutInflater) this.getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -73,5 +73,23 @@ public class GamesViewAdapter extends ASKAdapter<GameInfo> {
 		return rowView;
 		
 	}
+	
+	@Override
+	public void nextPage() {
+		if (getCount() > 0) {
+			mCurPage++;
+			super.nextPage();
+		}
+	}
+	
+	@Override
+	public void prevPage() {
+		if (mCurPage > 0) {
+			mCurPage--;
+			super.prevPage();
+		}
+	}
+	
+	private int mCurPage = 0;
 
 }

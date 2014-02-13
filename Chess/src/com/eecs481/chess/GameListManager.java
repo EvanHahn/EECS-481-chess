@@ -74,8 +74,6 @@ public class GameListManager {
 		  public void done(List<ParseObject> results, ParseException e) {
 		    if (e == null) {
 		    	mAdapter.clear();
-		    	mGames.clear();
-		    	mFullList.clear();
 		    	setUpGameLists(results);
 		    	mAdapter.addAll(mFullList);
 		    	mAdapter.notifyDataSetChanged();
@@ -87,6 +85,8 @@ public class GameListManager {
 	}
 	
 	private void setUpGameLists(List<ParseObject> games) {
+		mGames.clear();
+		mFullList.clear();
 		
 		for (ParseObject pObj : games) {
 			mGames.put(pObj.getObjectId(), pObj);
