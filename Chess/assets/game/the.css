@@ -22,6 +22,14 @@ a {
 	margin: 0 auto;
 }
 
+#board .legal-move {
+  background: #a9a9a9;
+}
+
+#board .legal-move.black-3c85d {
+	background: #696969;
+}
+
 #bottom-bar {
 	color: white;
 }

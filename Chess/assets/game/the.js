@@ -1,8 +1,10 @@
+function makeBoardFillScreen() {
+	var boardWidth = Math.min($(window).width(), $(window).height());
+	$('#board').css('width', boardWidth);
+}
+makeBoardFillScreen();
+
 var game = new Chess();
-
-var boardWidth = Math.min($(window).width(), $(window).height());
-$('#board').css('width', boardWidth);
-
 var board = new ChessBoard('board', {
 	position: ferry.getBoardState(),
 	showNotation: false,
@@ -13,21 +15,16 @@ var board = new ChessBoard('board', {
 	}
 });
 
-var removeGreySquares = function() {
-  $('#board .square-55d63').css('background', '');
-};
+var $squares = $('#board div[class^="square-"]');
 
-var greySquare = function(square) {
-  var squareEl = $('#board .square-' + square);
+function removeLegalMoves() {
+	$squares.removeClass('legal-move');
+}
 
-  var background = '#a9a9a9';
-  if (squareEl.hasClass('black-3c85d') === true) {
-    background = '#696969';
-  }
-
-  squareEl.css('background', background);
-};
-
+function showLegalMovesFor(square) {
+	var $el = $('#board .square-' + square);
+	$el.addClass('legal-move');
+}
 
 function updateStatus() {
 		var status;
@@ -47,8 +44,6 @@ function updateStatus() {
 }
 
 updateStatus();
-
-var $squares = $('#board div[class^="square-"]');
 
 function highlightLegalSquares() {
 	$squares.each(function() {
@@ -78,7 +73,7 @@ $squares.on('click', function() {
 
 		board.position(game.fen());
 
-		removeGreySquares();
+		removeLegalMoves();
 		delete board.currentPiece;
 
 	} else {
@@ -97,7 +92,7 @@ $squares.on('click', function() {
 		}
 
 		moves.forEach(function(move) {
-			greySquare(move.to);
+			showLegalMovesFor(move.to);
 		});
 
 		board.currentPiece = source;
