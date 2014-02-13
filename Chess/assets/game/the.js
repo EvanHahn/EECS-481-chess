@@ -59,48 +59,30 @@ function highlightLegalSquares() {
 highlightLegalSquares();
 
 $squares.on('click', function() {
-
 	var source = $(this).data('square');
 	var piece = game.get(source);
-
 	if (board.currentPiece) {
-
 		var move = game.move({
 			from: board.currentPiece,
 			to: source,
 			promotion: 'q' // TODO add UI for this
 		});
-
 		board.position(game.fen());
-
 		removeLegalMoves();
 		delete board.currentPiece;
-
 	} else {
-
 		var moves = game.moves({
 			square: source,
 			verbose: true
 		});
-
-		if (game.game_over() ||
-		  (!piece) ||
-		  (game.turn() === 'w' && piece.color !== game.WHITE) ||
-		  (game.turn() === 'b' && piece.color !== game.BLACK) ||
-		  (moves.length === 0)) {
-		  return false;
+		if (moves.length === 0) {
+			return false;
 		}
-
 		moves.forEach(function(move) {
 			showLegalMovesFor(move.to);
 		});
-
 		board.currentPiece = source;
-
 	}
-
-	return false;
-
 });
 
 $('#restart').click(function() {
