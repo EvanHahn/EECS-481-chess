@@ -1,6 +1,7 @@
 html, body {
 	width: 100%;
 	height: 100%;
+	font-family: sans-serif;
 }
 
 html {
@@ -13,6 +14,26 @@ body {
 	vertical-align: middle;
 }
 
+a {
+	text-decoration: none;
+}
+
 #board {
 	margin: 0 auto;
+}
+
+#bottom-bar {
+	color: white;
+}
+
+#buttons {
+	float: right;
+}
+
+#buttons li {
+	display: inline-block;
+}
+
+#buttons button {
+	font-size: 16pt;
 }

@@ -7,7 +7,10 @@ var board = new ChessBoard('board', {
 	position: ferry.getBoardState(),
 	showNotation: false,
 	pieceTheme: 'vendor/chesspieces/{piece}.png',
-	onChange: highlightLegalSquares
+	onChange: function() {
+		updateStatus();
+		highlightLegalSquares();
+	}
 });
 
 var removeGreySquares = function() {
@@ -24,6 +27,26 @@ var greySquare = function(square) {
 
   squareEl.css('background', background);
 };
+
+
+function updateStatus() {
+		var status;
+		var moveColor = 'White';
+		if (game.turn() === 'b')
+			moveColor = 'Black';
+		if (game.in_checkmate()) {
+			status = 'Game over! ' + moveColor + ' is in checkmate';
+		} else if (game.in_draw()) {
+			status = 'Game over! Draw';
+		} else {
+			status = moveColor + "'s turn";
+			if (game.in_check())
+				status += ' (in check!)';
+		}
+		$('#status').text(status);
+}
+
+updateStatus();
 
 var $squares = $('#board div[class^="square-"]');
 
@@ -83,4 +106,13 @@ $squares.on('click', function() {
 
 	return false;
 
+});
+
+$('#restart').click(function() {
+	game.reset();
+	board.position('start');
+});
+
+$('#flip').click(function() {
+	board.flip();
 });
