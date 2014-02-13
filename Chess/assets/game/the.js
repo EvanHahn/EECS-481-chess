@@ -27,20 +27,20 @@ function showLegalMovesFor(square) {
 }
 
 function updateStatus() {
-		var status;
-		var moveColor = 'White';
-		if (game.turn() === 'b')
-			moveColor = 'Black';
-		if (game.in_checkmate()) {
-			status = 'Game over! ' + moveColor + ' is in checkmate';
-		} else if (game.in_draw()) {
-			status = 'Game over! Draw';
-		} else {
-			status = moveColor + "'s turn";
-			if (game.in_check())
-				status += ' (in check!)';
-		}
-		$('#status').text(status);
+	var status;
+	var moveColor = 'White';
+	if (game.turn() === 'b')
+		moveColor = 'Black';
+	if (game.in_checkmate()) {
+		status = 'Game over! ' + moveColor + ' is in checkmate';
+	} else if (game.in_draw()) {
+		status = 'Game over! Draw';
+	} else {
+		status = moveColor + "'s turn";
+		if (game.in_check())
+			status += ' (in check!)';
+	}
+	$('#status').text(status);
 }
 
 updateStatus();
