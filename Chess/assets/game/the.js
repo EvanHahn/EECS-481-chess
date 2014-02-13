@@ -7,7 +7,9 @@ var board = new ChessBoard('board', {
 	position: ferry.getBoardState(),
 	showNotation: false,
 	pieceTheme: 'vendor/chesspieces/{piece}.png',
-	onChange: highlightLegalSquares
+	onChange: function() {
+		highlightLegalSquares();
+	}
 });
 
 var removeGreySquares = function() {
@@ -83,4 +85,8 @@ $squares.on('click', function() {
 
 	return false;
 
+});
+
+$('#flip').click(function() {
+	board.flip();
 });
