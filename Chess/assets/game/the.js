@@ -87,6 +87,11 @@ $squares.on('click', function() {
 
 });
 
+$('#restart').click(function() {
+	game.reset();
+	board.position('start');
+});
+
 $('#flip').click(function() {
 	board.flip();
 });
