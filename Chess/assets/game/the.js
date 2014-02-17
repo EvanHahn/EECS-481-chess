@@ -1,5 +1,5 @@
 function makeBoardFillScreen() {
-	var boardWidth = Math.min($(window).width(), $(window).height());
+	var boardWidth = Math.min($(window).width(), $(window).height() - $('#bottom-bar').height());
 	$('#board').css('width', boardWidth);
 }
 makeBoardFillScreen();
@@ -60,9 +60,8 @@ highlightLegalSquares();
 
 $squares.on('click', function() {
 	var source = $(this).data('square');
-	var piece = game.get(source);
 	if (board.currentPiece) {
-		var move = game.move({
+		game.move({
 			from: board.currentPiece,
 			to: source,
 			promotion: 'q' // TODO add UI for this
@@ -78,9 +77,9 @@ $squares.on('click', function() {
 		if (moves.length === 0) {
 			return false;
 		}
-		moves.forEach(function(move) {
-			showLegalMovesFor(move.to);
-		});
+		for (var i = 0; i < moves.length; i ++) {
+			showLegalMovesFor(moves[i].to);
+		}
 		board.currentPiece = source;
 	}
 });

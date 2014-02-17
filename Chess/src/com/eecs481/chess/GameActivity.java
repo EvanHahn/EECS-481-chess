@@ -41,7 +41,6 @@ public class GameActivity extends Activity {
 			}
 		}
 
-
 		@JavascriptInterface
 		public String getPlayer1() {
 			if (!pnpGame) {
