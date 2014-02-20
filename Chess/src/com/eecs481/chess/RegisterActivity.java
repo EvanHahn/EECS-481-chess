@@ -1,6 +1,5 @@
 package com.eecs481.chess;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -167,5 +166,5 @@ public class RegisterActivity extends ASKActivity {
    //////////////////////////////////////////////////////////////////////////
 
    /** The activity. */
-   private Activity m_activityContext;
+   private ASKActivity m_activityContext;
 }

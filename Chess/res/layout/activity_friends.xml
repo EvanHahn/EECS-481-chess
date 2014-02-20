@@ -1,0 +1,40 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friendsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".FriendsActivity" >
+
+    <LinearLayout
+        android:id="@+id/searchBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText 
+        android:id="@+id/searchBox"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/search_hint" />
+
+        <Button
+            android:id="@+id/searchBtn"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_btn_label" />
+
+    </LinearLayout>
+
+    <view
+        class="ask.scanninglibrary.views.ASKListView"
+        android:id="@+id/friendsListView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:textColor="@color/games_text_color"
+        android:textSize="@dimen/games_text_size" >
+    </view>
+
+</LinearLayout>

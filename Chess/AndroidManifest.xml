@@ -37,8 +37,10 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.eecs481.chess.NewGameActivity"
-            android:label="@string/title_activity_new_game" >
+            android:name="com.eecs481.chess.FriendsActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+            </intent-filter>
         </activity>
     </application>
 
