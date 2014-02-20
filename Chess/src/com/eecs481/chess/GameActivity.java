@@ -11,6 +11,10 @@ import android.view.Menu;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 public class GameActivity extends Activity {
@@ -80,6 +84,28 @@ public class GameActivity extends Activity {
 			} else {
 				return Consts.NEW_BOARD;
 			}
+		}
+		
+		@JavascriptInterface
+		public void saveBoardState(final String status, final String boardState) {
+			
+			if (pnpGame) {
+				return;
+			}
+			
+			String id = getObjectId();
+			
+			ParseQuery<ParseObject> query = ParseQuery.getQuery(Consts.GAME_OBJECT);
+			query.getInBackground(id, new GetCallback<ParseObject>() {
+			  public void done(ParseObject game, ParseException e) {
+			    if (e == null) {
+			      game.put(Consts.STATUS_FIELD, status);
+			      game.put(Consts.CUR_GAME_FIELD, boardState);
+			      game.saveInBackground();
+			    }
+			  }
+			});
+
 		}
 
 	}

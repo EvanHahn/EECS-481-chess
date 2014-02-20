@@ -1,15 +1,19 @@
+// jshint camelcase: false
+// jshint undef: false
+
 function makeBoardFillScreen() {
 	var boardWidth = Math.min($(window).width(), $(window).height() - $('#bottom-bar').height());
 	$('#board').css('width', boardWidth);
 }
 makeBoardFillScreen();
 
-var game = new Chess();
+var game = new Chess(ferry.getBoardState());
 var board = new ChessBoard('board', {
 	position: ferry.getBoardState(),
 	showNotation: false,
 	pieceTheme: 'vendor/chesspieces/{piece}.png',
 	onChange: function() {
+		saveGame();
 		updateStatus();
 		highlightLegalSquares();
 	}
@@ -24,6 +28,22 @@ function removeLegalMoves() {
 function showLegalMovesFor(square) {
 	var $el = $('#board .square-' + square);
 	$el.addClass('legal-move');
+}
+
+function saveGame() {
+
+	var activePlayer;
+	if (game.game_over())
+		activePlayer = 'gameover';
+	else if (game.turn() === 'w')
+		activePlayer = ferry.getPlayer1();
+	else
+		activePlayer = ferry.getPlayer2();
+
+	var boardState = game.fen();
+
+	ferry.saveBoardState(activePlayer, boardState);
+
 }
 
 function updateStatus() {
@@ -84,10 +104,14 @@ $squares.on('click', function() {
 	}
 });
 
-$('#restart').click(function() {
-	game.reset();
-	board.position('start');
-});
+if (ferry.getIsPassAndPlay()) {
+	$('#restart').hide();
+} else {
+	$('#restart').click(function() {
+		game.reset();
+		board.position('start');
+	});
+}
 
 $('#flip').click(function() {
 	board.flip();
