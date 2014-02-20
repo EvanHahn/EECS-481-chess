@@ -8,7 +8,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import ask.scanninglibrary.ASKActivity;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 /**
@@ -19,8 +18,6 @@ import com.parse.ParseUser;
  * @author Jake Korona
  */
 public class Homescreen extends ASKActivity {
-
-   public static ParseObject active_game;
 
    @Override
    protected void onCreate(Bundle savedInstanceState) {

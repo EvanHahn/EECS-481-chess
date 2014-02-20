@@ -1,18 +1,46 @@
 html, body {
 	width: 100%;
 	height: 100%;
+	font-family: sans-serif;
 }
 
 html {
-	display: table;
 	background-color: black;
 }
 
-body {
-	display: table-cell;
-	vertical-align: middle;
+a {
+	text-decoration: none;
 }
 
 #board {
 	margin: 0 auto;
+}
+
+#board .legal-move {
+  background: #a9a9a9;
+}
+
+#board .legal-move.black-3c85d {
+	background: #696969;
+}
+
+#bottom-bar {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	color: white;
+	background-color: black;
+}
+
+#buttons {
+	float: right;
+}
+
+#buttons li {
+	display: inline-block;
+}
+
+#buttons button {
+	font-size: 16pt;
 }
