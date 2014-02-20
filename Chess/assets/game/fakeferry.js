@@ -15,7 +15,8 @@ if (typeof ferry === 'undefined') {
 		},
 		getBoardState: function() {
 			return 'start';
-		}
+		},
+		saveBoardState: function() {}
 	};
 
 }
