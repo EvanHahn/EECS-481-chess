@@ -72,10 +72,10 @@ public class RegisterActivity extends ASKActivity {
    }
 
    @Override
-   protected void onResume() {
+   protected void onRestart() {
       super.onResume();
       if (ParseUser.getCurrentUser() != null)
-         m_activityContext.finish();
+         finish();
       else {
          EditText un = (EditText)findViewById(R.id.register_username);
          un.setText("");
