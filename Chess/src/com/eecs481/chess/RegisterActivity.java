@@ -52,23 +52,26 @@ public class RegisterActivity extends ASKActivity {
          m_activityContext.startActivity(
             new Intent(m_activityContext, Homescreen.class));
       }
-      else {
-         Button registerButton = (Button) findViewById(R.id.register_btn);
-         registerButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               onRegisterButtonClicked();
-            }
-         });
+   }
 
-         Button loginButton = (Button) findViewById(R.id.login_btn);
-         loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-               onLoginButtonClicked();
-            }
-         });
-      }
+   @Override
+   protected void onStart() {
+      super.onStart();
+      Button registerButton = (Button) findViewById(R.id.register_btn);
+      registerButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            onRegisterButtonClicked();
+         }
+      });
+
+      Button loginButton = (Button) findViewById(R.id.login_btn);
+      loginButton.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+            onLoginButtonClicked();
+         }
+      });
    }
 
    @Override
