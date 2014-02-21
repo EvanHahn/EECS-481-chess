@@ -25,8 +25,6 @@ import com.parse.ParseUser;
 
 public class GameListManager {
 	
-	public static final int GAMES_PER_PAGE = 10;
-	
 	public GameListManager(final Homescreen homeScreen) {
 		mActivity = homeScreen;
 		currentUser = ParseUser.getCurrentUser();
@@ -51,9 +49,7 @@ public class GameListManager {
 			    gameParams.add(game.getString(Consts.P2_FIELD));
 			    gameParams.add(game.getString(Consts.STATUS_FIELD));
 			    gameParams.add(game.getString(Consts.CUR_GAME_FIELD));
-			    //gameParams.add(Consts.NEW_BOARD);
-			    
-			    
+			    		    
 			    intent.putExtra(Consts.GAME_PARAMS, gameParams);
 			    mActivity.startActivity(intent);
 			}
@@ -68,25 +64,38 @@ public class GameListManager {
 			return;
 		}
 		
-		ParseQuery<ParseObject> queryPlayer1 = ParseQuery.getQuery(Consts.GAME_OBJECT);
-		queryPlayer1.whereEqualTo(Consts.P1_FIELD, currentUser.getUsername());
+		ParseQuery<ParseObject> gameQuery = getGameQuery();
 		
-		ParseQuery<ParseObject> queryPlayer2 = ParseQuery.getQuery(Consts.GAME_OBJECT);
-		queryPlayer2.whereEqualTo(Consts.P2_FIELD, currentUser.getUsername());
-		
-		List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
-		queries.add(queryPlayer1);
-		queries.add(queryPlayer2);
-		
-		ParseQuery<ParseObject> mainQuery = ParseQuery.or(queries);
-		
-		mainQuery.findInBackground(new FindCallback<ParseObject>() {
+		gameQuery.findInBackground(new FindCallback<ParseObject>() {
 		  public void done(List<ParseObject> results, ParseException e) {
 		    if (e == null) {
 		    	mAdapter.clear();
 		    	setUpGameLists(results);
 		    	mAdapter.addAll(mFullList);
 		    	mAdapter.notifyDataSetChanged();
+		    } else {
+		    	System.err.println("error during get games query!");
+		    }
+		  }
+		});
+	}
+	
+	public void refreshUserGames() {
+		if (currentUser == null) {
+			return;
+		}
+		
+		ParseQuery<ParseObject> gameQuery = getGameQuery();
+		
+		gameQuery.findInBackground(new FindCallback<ParseObject>() {
+		  public void done(List<ParseObject> results, ParseException e) {
+		    if (e == null) {
+		    	if (gamesChanged(results)) {
+			    	mAdapter.clear();
+			    	setUpGameLists(results);
+			    	mAdapter.addAll(mFullList);
+			    	mAdapter.notifyDataSetChanged();
+		    	}
 		    } else {
 		    	System.err.println("error during get games query!");
 		    }
@@ -113,6 +122,33 @@ public class GameListManager {
 				mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, displayStatus));
 			}
 		}
+	}
+	
+	private Boolean gamesChanged(List<ParseObject> games) {
+		for (ParseObject pObj : games) {
+			String id = pObj.getObjectId();
+			String newGameStatus = pObj.getString(Consts.STATUS_FIELD);
+			
+			if (!(mGames.get(id).getString(Consts.STATUS_FIELD).equals(newGameStatus))) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private ParseQuery<ParseObject> getGameQuery() {
+		ParseQuery<ParseObject> queryPlayer1 = ParseQuery.getQuery(Consts.GAME_OBJECT);
+		queryPlayer1.whereEqualTo(Consts.P1_FIELD, currentUser.getUsername());
+		
+		ParseQuery<ParseObject> queryPlayer2 = ParseQuery.getQuery(Consts.GAME_OBJECT);
+		queryPlayer2.whereEqualTo(Consts.P2_FIELD, currentUser.getUsername());
+		
+		List<ParseQuery<ParseObject>> queries = new ArrayList<ParseQuery<ParseObject>>();
+		queries.add(queryPlayer1);
+		queries.add(queryPlayer2);
+		
+		return ParseQuery.or(queries);
 	}
 
 	

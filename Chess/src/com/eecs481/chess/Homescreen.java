@@ -1,14 +1,17 @@
 package com.eecs481.chess;
 
 import java.util.ArrayList;
+
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import ask.scanninglibrary.ASKActivity;
+
 import com.parse.ParseUser;
 
 /**
@@ -49,12 +52,30 @@ public class Homescreen extends ASKActivity {
             startActivity(new Intent(m_activityContext, FriendsActivity.class));
          }
       });
+      
+      refresh = new Runnable() {
+		@Override
+		public void run() {
+			m_gameList.refreshUserGames();
+			handler.postDelayed(this, delay);
+		}
+      };
+      
+      //start thread to refresh after delay
+      handler.postDelayed(refresh, delay);
    }
 
    @Override
    protected void onResume() {
       super.onResume();
       m_gameList.findUserGames();
+      handler.postDelayed(refresh, delay);
+   }
+   
+   @Override
+   protected void onPause() {
+	   super.onPause();
+	   handler.removeCallbacks(refresh);
    }
 
    @Override
@@ -88,4 +109,8 @@ public class Homescreen extends ASKActivity {
 
    /** Manager for the games list. */
    private GameListManager m_gameList;
+   
+   private Handler handler = new Handler();
+   private Runnable refresh;
+   private long delay = 180000; //3 minutes
 }
