@@ -117,12 +117,12 @@ $squares.on('click', function() {
 });
 
 if (ferry.getIsPassAndPlay()) {
-	$('#restart').hide();
-} else {
 	$('#restart').click(function() {
 		game.reset();
 		board.position('start');
 	});
+} else {
+	$('#restart').hide();
 }
 
 $('#flip').click(function() {
