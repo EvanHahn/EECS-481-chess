@@ -1,3 +1,5 @@
+/* global jQuery, NodeList */
+
 (function() {
 
 	var CSS = [

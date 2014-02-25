@@ -90,7 +90,6 @@ $squares.on('click', function() {
 		return;
 
 	var source = $(this).data('square');
-	console.log('clicked on ' + source);
 
 	if (board.currentPiece) {
 
@@ -102,6 +101,7 @@ $squares.on('click', function() {
 		board.position(game.fen());
 		removeLegalMoves();
 		delete board.currentPiece;
+		highlightLegalSquares();
 
 	} else {
 
@@ -113,6 +113,7 @@ $squares.on('click', function() {
 			return;
 		}
 		removeAllScanning();
+		ask.enable(this);
 		for (var i = 0; i < moves.length; i ++) {
 			showLegalMovesFor(moves[i].to);
 		}
