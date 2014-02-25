@@ -2,8 +2,9 @@
 // jshint undef: false
 
 function makeBoardFillScreen() {
-	var boardWidth = Math.min($(window).width(), $(window).height() - $('#bottom-bar').height());
+	var boardWidth = Math.min($(window).width(), $(window).height() - $('#bottom-bar').height() - 20);
 	$('#board').css('width', boardWidth);
+	$('#bottom-bar .container').css('width', boardWidth);
 }
 makeBoardFillScreen();
 
