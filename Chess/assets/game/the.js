@@ -66,21 +66,29 @@ function updateStatus() {
 updateStatus();
 
 function highlightLegalSquares() {
-	$squares.each(function() {
-		var source = $(this).data('square');
-		if (game.moves({ square: source }).length) {
-			$(this).css('box-shadow', 'inset 0 0 10px red');
-		} else {
-			$(this).css('box-shadow', 'none');
-		}
-	});
+	if (ferry.isMyTurn()) {
+		$squares.each(function() {
+			var source = $(this).data('square');
+			if (game.moves({ square: source }).length) {
+				$(this).css('box-shadow', 'inset 0 0 10px red');
+			} else {
+				$(this).css('box-shadow', 'none');
+			}
+		});
+	}
 }
 
 highlightLegalSquares();
 
 $squares.on('click', function() {
+
+	if (!ferry.isMyTurn())
+		return false;
+
 	var source = $(this).data('square');
+
 	if (board.currentPiece) {
+
 		game.move({
 			from: board.currentPiece,
 			to: source,
@@ -89,7 +97,9 @@ $squares.on('click', function() {
 		board.position(game.fen());
 		removeLegalMoves();
 		delete board.currentPiece;
+
 	} else {
+
 		var moves = game.moves({
 			square: source,
 			verbose: true
@@ -101,7 +111,9 @@ $squares.on('click', function() {
 			showLegalMovesFor(moves[i].to);
 		}
 		board.currentPiece = source;
+
 	}
+
 });
 
 if (ferry.getIsPassAndPlay()) {

@@ -64,6 +64,11 @@ public class GameActivity extends Activity {
 		}
 		
 		@JavascriptInterface
+		public Boolean isMyTurn() {
+			return pnpGame || getCurrentUser().equals(getGameStatus());
+		}
+		
+		@JavascriptInterface
 		public String getGameStatus() {
 			if (!pnpGame) {
 				return mGameParams.get(4);
