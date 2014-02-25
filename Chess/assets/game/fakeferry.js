@@ -16,6 +16,9 @@ if (typeof ferry === 'undefined') {
 		getBoardState: function() {
 			return 'start';
 		},
+		isMyTurn: function() {
+			return true;
+		},
 		saveBoardState: function() {}
 	};
 
