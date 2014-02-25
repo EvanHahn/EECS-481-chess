@@ -14,7 +14,7 @@ if (typeof ferry === 'undefined') {
 			return true;
 		},
 		getBoardState: function() {
-			return 'start';
+			return 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 		},
 		isMyTurn: function() {
 			return true;
