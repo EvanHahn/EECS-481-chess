@@ -23,12 +23,16 @@ var board = new ChessBoard('board', {
 var $squares = $('#board div[class^="square-"]');
 
 function removeLegalMoves() {
-	$squares.removeClass('legal-move');
+	removeAllScanning();
 }
 
 function showLegalMovesFor(square) {
 	var $el = $('#board .square-' + square);
-	$el.addClass('legal-move');
+	ask.enable($el);
+}
+
+function removeAllScanning() {
+	ask.disable($squares);
 }
 
 function saveGame() {
@@ -63,7 +67,6 @@ function updateStatus() {
 	}
 	$('#status').text(status);
 }
-
 updateStatus();
 
 function highlightLegalSquares() {
@@ -71,9 +74,9 @@ function highlightLegalSquares() {
 		$squares.each(function() {
 			var source = $(this).data('square');
 			if (game.moves({ square: source }).length) {
-				$(this).css('box-shadow', 'inset 0 0 10px red');
+				ask.enable(this);
 			} else {
-				$(this).css('box-shadow', 'none');
+				ask.disable(this);
 			}
 		});
 	}
@@ -84,9 +87,10 @@ highlightLegalSquares();
 $squares.on('click', function() {
 
 	if (!ferry.isMyTurn())
-		return false;
+		return;
 
 	var source = $(this).data('square');
+	console.log('clicked on ' + source);
 
 	if (board.currentPiece) {
 
@@ -106,8 +110,9 @@ $squares.on('click', function() {
 			verbose: true
 		});
 		if (moves.length === 0) {
-			return false;
+			return;
 		}
+		removeAllScanning();
 		for (var i = 0; i < moves.length; i ++) {
 			showLegalMovesFor(moves[i].to);
 		}

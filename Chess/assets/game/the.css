@@ -16,6 +16,10 @@ a {
 	margin: 0 auto;
 }
 
+#board .square-55d63 {
+	box-sizing: border-box;
+}
+
 #board .legal-move {
   background: #a9a9a9;
 }
