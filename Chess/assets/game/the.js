@@ -135,3 +135,6 @@ if (ferry.getIsPassAndPlay()) {
 $('#flip').click(function() {
 	board.flip();
 });
+
+console.log('WebView started with the following user agent:');
+console.log(navigator.userAgent);
