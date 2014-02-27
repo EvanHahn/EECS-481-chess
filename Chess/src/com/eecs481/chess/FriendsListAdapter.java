@@ -147,6 +147,22 @@ public class FriendsListAdapter extends ASKAdapter<String> {
    public List<String> getList() {
       return m_friends;
    }
+   
+   @Override
+   public void nextPage() {
+      if (getCount() > 0) {
+         mCurPage++;
+   	  	 super.nextPage();
+   	  }
+   }
+   
+   @Override
+   public void prevPage() {
+      if (mCurPage > 0) {
+         mCurPage--;
+         super.prevPage();
+      }
+   }
 
    //////////////////////////////////////////////////////////////////////////
    // Non-public methods
@@ -164,5 +180,7 @@ public class FriendsListAdapter extends ASKAdapter<String> {
    private final LayoutInflater m_inflater;
 
    private List<String> m_friends;
+   
+   private int mCurPage = 0;
 
 }
