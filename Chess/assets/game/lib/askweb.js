@@ -1,6 +1,11 @@
+/* jshint browser: true */
 /* global jQuery, NodeList */
 
 (function() {
+
+	var userAgent = navigator.userAgent.toLowerCase();
+	var isAndroid = userAgent.indexOf('android') !== -1;
+	var CLICK_EVENT = isAndroid ? 'tap' : 'click';
 
 	var CSS = [
 		'.askweb-overlay {',
@@ -59,7 +64,7 @@
 		var overlay = document.createElement('div');
 		overlay.className += 'askweb-overlay';
 
-		overlay.addEventListener('click', function(event) {
+		overlay.addEventListener(CLICK_EVENT, function(event) {
 			event.stopPropagation();
 			scanningTargets[scanIndex].click();
 		});
