@@ -37,19 +37,11 @@ public class GameListManager {
 		mListView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-				
-			    Intent intent = new Intent(mActivity, GameActivity.class);
 
-			    ArrayList<String> gameParams = new ArrayList<String>();
 			    ParseObject game = mGames.get(mFullList.get(position - 1).id);
+			    ArrayList<String> gameParams = Utility.getGameParams(game);
 			    
-			    gameParams.add(Consts.NETWORK);
-			    gameParams.add(game.getObjectId());
-			    gameParams.add(game.getString(Consts.P1_FIELD));
-			    gameParams.add(game.getString(Consts.P2_FIELD));
-			    gameParams.add(game.getString(Consts.STATUS_FIELD));
-			    gameParams.add(game.getString(Consts.CUR_GAME_FIELD));
-			    		    
+			    Intent intent = new Intent(mActivity, GameActivity.class);		    
 			    intent.putExtra(Consts.GAME_PARAMS, gameParams);
 			    mActivity.startActivity(intent);
 			}

@@ -39,9 +39,7 @@ public class Homescreen extends ASKActivity {
          @Override
          public void onClick(View v) {
             Intent intent = new Intent(m_activityContext, GameActivity.class);
-            ArrayList<String> gameParams = new ArrayList<String>();
-            gameParams.add(Consts.PNP);
-            intent.putExtra(Consts.GAME_PARAMS, gameParams);
+            intent.putExtra(Consts.GAME_PARAMS, Utility.getGameParams());
             startActivity(intent);
          }
       });
