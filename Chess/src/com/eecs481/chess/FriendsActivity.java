@@ -1,6 +1,7 @@
 package com.eecs481.chess;
 
 import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import ask.scanninglibrary.ASKActivity;
+
 import com.parse.ParseUser;
 
 /**
@@ -47,22 +49,21 @@ public class FriendsActivity extends ASKActivity {
       });
 
       ListView friendsListView = (ListView) findViewById(R.id.friendsListView);
-      FriendsListAdapter adapter = new FriendsListAdapter(m_activityContext, R.layout.friends_list_row, friendsListView);
+      FriendsListAdapter adapter = new FriendsListAdapter(m_activityContext, friendsListView);
+      adapter.clear();
       adapter.setList(m_friends);
+      adapter.addAll(m_friends);
       friendsListView.setAdapter(adapter);
+      adapter.notifyDataSetChanged();
 
       friendsListView.setOnItemClickListener(new OnItemClickListener() {
          @Override
          public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
-            //Intent intent = new Intent(m_activityContext, GameActivity.class);
-            //intent.putExtra(name, value);
+
             startActivity(new Intent(m_activityContext, GameActivity.class));
          }
       });
 
-      //      ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-      //      query.whereNotEqualTo("objectId", ParseUser.getCurrentUser().getObjectId());
-      //      query.whereEqualTo("username", ParseUser.getCurrentUser().getUsername());
    }
 
    //////////////////////////////////////////////////////////////////////////
