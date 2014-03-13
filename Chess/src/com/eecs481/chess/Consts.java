@@ -29,4 +29,7 @@ public class Consts {
 	public static final String NEW_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	
 	public static final String GAME_OVER_STATUS = "gameover";
+	
+	//user object properties
+	public static final String USER_FRIENDS = "friends";
 }
