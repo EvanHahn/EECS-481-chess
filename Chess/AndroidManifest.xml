@@ -46,6 +46,10 @@
                 <action android:name="android.intent.action.VIEW" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.eecs481.chess.GameSettingsPnp"
+            android:label="@string/title_activity_game_settings_pnp" >
+        </activity>
     </application>
 
 </manifest>

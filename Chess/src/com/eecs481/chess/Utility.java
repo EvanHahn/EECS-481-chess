@@ -17,9 +17,21 @@ public class Utility {
 	    return gameParams;
 	}
 	
-	public static ArrayList<String> getGameParams() {
+	public static ArrayList<String> getGameParams(boolean whiteScan, boolean blackScan) {
         ArrayList<String> gameParams = new ArrayList<String>();
         gameParams.add(Consts.PNP);
+        
+        if (whiteScan) {
+        	gameParams.add(Consts.SCANNING);
+        } else {
+        	gameParams.add(Consts.NOT_SCANNING);
+        }
+        
+        if (blackScan) {
+        	gameParams.add(Consts.SCANNING);
+        } else {
+        	gameParams.add(Consts.NOT_SCANNING);
+        }
 	    
 	    return gameParams;
 	}

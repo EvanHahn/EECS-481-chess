@@ -1,7 +1,5 @@
 package com.eecs481.chess;
 
-import java.util.ArrayList;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -38,8 +36,7 @@ public class Homescreen extends ASKActivity {
       passPlayButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-            Intent intent = new Intent(m_activityContext, GameActivity.class);
-            intent.putExtra(Consts.GAME_PARAMS, Utility.getGameParams());
+        	Intent intent = new Intent(m_activityContext, GameSettingsPnp.class);
             startActivity(intent);
          }
       });
@@ -101,7 +98,7 @@ public class Homescreen extends ASKActivity {
             return super.onOptionsItemSelected(item);
       }
    }
-
+   
    /** The activity. */
    private ASKActivity m_activityContext;
 

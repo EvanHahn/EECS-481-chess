@@ -92,6 +92,24 @@ public class GameActivity extends Activity {
 		}
 		
 		@JavascriptInterface
+		public Boolean whiteScanning() {
+			if (pnpGame) {
+				return mGameParams.get(1).equals(Consts.SCANNING);
+			} else {
+				return true;
+			}
+		}
+		
+		@JavascriptInterface
+		public Boolean blackScanning() {
+			if (pnpGame) {
+				return mGameParams.get(2).equals(Consts.SCANNING);
+			} else {
+				return true;
+			}
+		}
+		
+		@JavascriptInterface
 		public void saveBoardState(final String status, final String boardState) {
 			
 			if (pnpGame) {

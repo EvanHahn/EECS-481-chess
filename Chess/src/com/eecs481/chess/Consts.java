@@ -21,6 +21,10 @@ public class Consts {
 	
 	public static final String NETWORK = "network";
 	
+	public static final String SCANNING = "scanning";
+	
+	public static final String NOT_SCANNING = "not_scanning";
+	
 	
 	public static final String NEW_BOARD = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
 	
