@@ -22,6 +22,7 @@ public class GameActivity extends Activity {
 	private WebView webView;
 	private ArrayList<String> mGameParams;
 	private boolean pnpGame = true;
+	private Intent backbuttonIntent;
 
 	private class Ferry { // the "bridge" between real Android and JavaScript
 
@@ -110,6 +111,12 @@ public class GameActivity extends Activity {
 		}
 		
 		@JavascriptInterface
+		public void backButton() {
+
+            startActivity(backbuttonIntent);
+		}
+		
+		@JavascriptInterface
 		public void saveBoardState(final String status, final String boardState) {
 			
 			if (pnpGame) {
@@ -140,6 +147,8 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.game_view);
+		
+		backbuttonIntent = new Intent(this, Homescreen.class);
 		
 		Intent intent = getIntent();
 		
