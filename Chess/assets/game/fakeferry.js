@@ -11,7 +11,7 @@ if (typeof ferry === 'undefined') {
 			return 'USER2';
 		},
 		getIsPassAndPlay: function() {
-			return true;
+			return false;
 		},
 		getBoardState: function() {
 			return 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
@@ -20,7 +20,13 @@ if (typeof ferry === 'undefined') {
 			return true;
 		},
 		backButton: function() {},
-		saveBoardState: function() {}
+		saveBoardState: function() {},
+        whiteScanning: function() {
+            return true;
+        },
+        blackScanning: function() {
+            return false;
+        }
 	};
 
 }
