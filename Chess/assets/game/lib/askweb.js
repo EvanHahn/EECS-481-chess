@@ -6,8 +6,6 @@
 	var userAgent = navigator.userAgent.toLowerCase();
 	var isAndroid = userAgent.indexOf('android') !== -1;
 	var CLICK_EVENT = isAndroid ? 'tap' : 'click';
-	CLICK_EVENT = 'tap';
-	alert(CLICK_EVENT);
 
 	var CSS = [
 		'.askweb-overlay {',
