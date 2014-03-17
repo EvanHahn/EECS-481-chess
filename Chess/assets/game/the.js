@@ -92,12 +92,13 @@ function highlightLegalSquares() {
 
 highlightLegalSquares();
 
-$squares.on('click', function() {
+$('#board').on('click', function(event) {
 
 	if (!ferry.isMyTurn())
 		return;
 
-	var source = $(this).data('square');
+	var squareElement = event.target;
+	var source = $(squareElement).data('square');
 
 	if (board.currentPiece) {
 
@@ -121,7 +122,7 @@ $squares.on('click', function() {
 			return;
 		}
 		removeAllScanning();
-		ask.enable(this);
+		ask.enable(squareElement);
 		for (var i = 0; i < moves.length; i ++) {
 			showLegalMovesFor(moves[i].to);
 		}
@@ -152,5 +153,6 @@ $('#back').click(function() {
 });
 
 ask.enable($('#buttons button'));
+
 console.log('WebView started with the following user agent:');
 console.log(navigator.userAgent);
