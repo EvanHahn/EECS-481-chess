@@ -1,13 +1,10 @@
 package com.eecs481.chess;
 
 import java.util.List;
-
 import android.content.Context;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,127 +14,57 @@ import ask.scanninglibrary.ASKActivity;
 import ask.scanninglibrary.views.ASKAdapter;
 
 /**
+ * Custom adapter to support the displaying of a Graceful CHess user's friends.
  * 
  * @author Jake Korona
+ * @author Will Wood
  */
 public class FriendsListAdapter extends ASKAdapter<String> {
-   //////////////////////////////////////////////////////////////////////////
-   // Public fields
-   //////////////////////////////////////////////////////////////////////////
 
    //////////////////////////////////////////////////////////////////////////
    // Public methods
    //////////////////////////////////////////////////////////////////////////
 
-//   public FriendsListAdapter(ASKActivity context, int resource, AdapterView<?> view) {
-//      super(context, resource, view);
-//
-//      if (context == null)
-//         throw new IllegalArgumentException("The context must not be null");
-//
-//      m_activityContext = context;
-//      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//   }
-   
-	public FriendsListAdapter(ASKActivity context, ListView listView) {
-		super(context, R.layout.games_list_row, listView);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			int textViewResourceId, List<String> objects,
-			AdapterView<?> view) {
-		super(context, resource, textViewResourceId, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			List<String> objects, AdapterView<?> view) {
-		super(context, resource, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-
-	public FriendsListAdapter(ASKActivity context, int resource,
-			String[] objects, AdapterView<?> view) {
-		super(context, resource, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			AdapterView<?> view) {
-		super(context, resource, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			int textViewResourceId, String[] objects, AdapterView<?> view) {
-		super(context, resource, textViewResourceId, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-
-   /**
-    * How many items are in the data set represented by this Adapter.
-    * 
-    * @return The total count.
-    */
-   @Override
-   public int getCount() {
-      return (m_friends == null ? 0 : m_friends.size());
+   public FriendsListAdapter(ASKActivity context, ListView listView) {
+      super(context, R.layout.games_list_row, listView);
+      m_activityContext = context;
+      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    }
 
-   /**
-    * Gets an item.
-    * 
-    * @param position The item to retrieve. Must be non-negative and less than the total number of items returned by
-    *        {@link #getCount()}.
-    * @return The item at {@code position}.
-    */
-   @Override
-   public String getItem(int position) {
-      if (position < 0 || position >= getCount())
-         throw new IllegalArgumentException("Invalid offset: " + position);
-
-      return m_friends.get(position);
+   public FriendsListAdapter(ASKActivity context, int resource,
+      int textViewResourceId, List<String> objects,
+      AdapterView<?> view) {
+      super(context, resource, textViewResourceId, objects, view);
+      m_activityContext = context;
+      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    }
 
-   /**
-    * Gets the row id associated with the specified position in the list.
-    * 
-    * @param position The item to retrieve. Must be non-negative and less than
-    *        the total number of items returned by {@link #getCount()}.
-    * @return The row ID.
-    */
-   @Override
-   public long getItemId(int position) {
-      return position;
+   public FriendsListAdapter(ASKActivity context, int resource,
+      List<String> objects, AdapterView<?> view) {
+      super(context, resource, objects, view);
+      m_activityContext = context;
+      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    }
 
-   @Override
-   public View askGetView(int position, View convertView, final ViewGroup parent) {
-      View rowView = m_inflater.inflate(R.layout.friends_list_row, parent, false);
-      
-		rowView.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View arg0, MotionEvent arg1) {
-				if (arg1.getAction() == MotionEvent.ACTION_UP) {
-					ListView theView = ((ListView) parent);
-					int pos = theView.getPositionForView(arg0);
-					theView.performItemClick(theView, pos, theView.getItemIdAtPosition(pos));
-				}
-				return false;
-			}
-		});
-		
-		TextView friendUsername = (TextView) rowView.findViewById(R.id.friend_username);
-		friendUsername.setText(getItem(position));
-		
-		return rowView;
+   public FriendsListAdapter(ASKActivity context, int resource,
+      String[] objects, AdapterView<?> view) {
+      super(context, resource, objects, view);
+      m_activityContext = context;
+      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+   }
+
+   public FriendsListAdapter(ASKActivity context, int resource,
+      AdapterView<?> view) {
+      super(context, resource, view);
+      m_activityContext = context;
+      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+   }
+
+   public FriendsListAdapter(ASKActivity context, int resource,
+      int textViewResourceId, String[] objects, AdapterView<?> view) {
+      super(context, resource, textViewResourceId, objects, view);
+      m_activityContext = context;
+      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
    }
 
    public void setList(List<String> list) {
@@ -147,15 +74,59 @@ public class FriendsListAdapter extends ASKAdapter<String> {
    public List<String> getList() {
       return m_friends;
    }
-   
+
+   //////////////////////////////////////////////////////////////////////////
+   // ASKAdapter overrides
+   //////////////////////////////////////////////////////////////////////////
+
+   @Override
+   public int getCount() {
+      return (m_friends == null ? 0 : m_friends.size());
+   }
+
+   @Override
+   public String getItem(int position) {
+      if (position < 0 || position >= getCount())
+         throw new IllegalArgumentException("Invalid offset: " + position);
+
+      return m_friends.get(position);
+   }
+
+   @Override
+   public long getItemId(int position) {
+      return position;
+   }
+
+   @Override
+   public View askGetView(int position, View convertView, final ViewGroup parent) {
+      View rowView = m_inflater.inflate(R.layout.friends_list_row, parent, false);
+
+      rowView.setOnTouchListener(new OnTouchListener() {
+         @Override
+         public boolean onTouch(View arg0, MotionEvent arg1) {
+            if (arg1.getAction() == MotionEvent.ACTION_UP) {
+               ListView theView = ((ListView) parent);
+               int pos = theView.getPositionForView(arg0);
+               theView.performItemClick(theView, pos, theView.getItemIdAtPosition(pos));
+            }
+            return false;
+         }
+      });
+
+      TextView friendUsername = (TextView) rowView.findViewById(R.id.friend_username);
+      friendUsername.setText(getItem(position));
+
+      return rowView;
+   }
+
    @Override
    public void nextPage() {
       if (getCount() > 0) {
          mCurPage++;
-   	  	 super.nextPage();
-   	  }
+         super.nextPage();
+      }
    }
-   
+
    @Override
    public void prevPage() {
       if (mCurPage > 0) {
@@ -165,10 +136,6 @@ public class FriendsListAdapter extends ASKAdapter<String> {
    }
 
    //////////////////////////////////////////////////////////////////////////
-   // Non-public methods
-   //////////////////////////////////////////////////////////////////////////
-
-   //////////////////////////////////////////////////////////////////////////
    // Non-public fields
    //////////////////////////////////////////////////////////////////////////
 
@@ -176,11 +143,10 @@ public class FriendsListAdapter extends ASKAdapter<String> {
    private final ASKActivity m_activityContext;
 
    /** The {@link LayoutInflater} for this adapter. */
-   //private final LayoutInflater m_inflater;
    private final LayoutInflater m_inflater;
 
    private List<String> m_friends;
-   
+
    private int mCurPage = 0;
 
 }
