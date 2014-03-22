@@ -21,6 +21,10 @@ var board = new ChessBoard('board', {
 });
 
 var $squares = $('#board div[class^="square-"]');
+/*var whiteScanning = (game.turn() === 'w' && ferry.whiteScanning());
+var blackScanning = (game.turn() === 'b' && ferry.blackScanning());
+console.log(whiteScanning);
+console.log(blackScanning);*/
 
 function removeLegalMoves() {
 	removeAllScanning();
@@ -32,7 +36,8 @@ function showLegalMovesFor(square) {
 }
 
 function removeAllScanning() {
-	ask.disable($squares);
+
+    ask.disable($squares);
 }
 
 function saveGame() {
@@ -65,15 +70,18 @@ function updateStatus() {
 		if (game.in_check())
 			status += ' (in check!)';
 	}
+	/*whiteScanning = (game.turn() === 'w' && ferry.whiteScanning());
+    blackScanning = (game.turn() === 'b' && ferry.blackScanning());*/
 	$('#status').text(status);
 }
 updateStatus();
 
 function highlightLegalSquares() {
-	if (ferry.isMyTurn()) {
+	if (ferry.isMyTurn()) { //&& ((game.turn() === 'w' && ferry.whiteScanning()) ||
+                             //(game.turn() === 'b' && ferry.blackScanning()))) {
 		$squares.each(function() {
 			var source = $(this).data('square');
-			if (game.moves({ square: source }).length) {
+			if (game.moves({ square: source }).length /*&& (whiteScanning || blackScanning)*/) {
 				ask.enable(this);
 			} else {
 				ask.disable(this);
@@ -84,12 +92,13 @@ function highlightLegalSquares() {
 
 highlightLegalSquares();
 
-$squares.on('click', function() {
+$('#board').on('click', function(event) {
 
 	if (!ferry.isMyTurn())
 		return;
 
-	var source = $(this).data('square');
+	var squareElement = event.target;
+	var source = $(squareElement).data('square');
 
 	if (board.currentPiece) {
 
@@ -113,7 +122,7 @@ $squares.on('click', function() {
 			return;
 		}
 		removeAllScanning();
-		ask.enable(this);
+		ask.enable(squareElement);
 		for (var i = 0; i < moves.length; i ++) {
 			showLegalMovesFor(moves[i].to);
 		}
@@ -134,7 +143,16 @@ if (ferry.getIsPassAndPlay()) {
 
 $('#flip').click(function() {
 	board.flip();
+	removeAllScanning();
+	$squares = $('#board div[class^="square-"]');
+	highlightLegalSquares();
 });
+
+$('#back').click(function() {
+	ferry.backButton();
+});
+
+ask.enable($('#buttons button'));
 
 console.log('WebView started with the following user agent:');
 console.log(navigator.userAgent);

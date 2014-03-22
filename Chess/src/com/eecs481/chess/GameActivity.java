@@ -21,7 +21,8 @@ public class GameActivity extends Activity {
 
 	private WebView webView;
 	private ArrayList<String> mGameParams;
-	private Boolean pnpGame = true;
+	private boolean pnpGame = true;
+	private Intent backbuttonIntent;
 
 	private class Ferry { // the "bridge" between real Android and JavaScript
 
@@ -64,7 +65,7 @@ public class GameActivity extends Activity {
 		}
 		
 		@JavascriptInterface
-		public Boolean isMyTurn() {
+		public boolean isMyTurn() {
 			return pnpGame || getCurrentUser().equals(getGameStatus());
 		}
 		
@@ -78,7 +79,7 @@ public class GameActivity extends Activity {
 		}
 
 		@JavascriptInterface
-		public Boolean getIsPassAndPlay() {
+		public boolean getIsPassAndPlay() {
 			return pnpGame;
 		}
 
@@ -92,7 +93,7 @@ public class GameActivity extends Activity {
 		}
 		
 		@JavascriptInterface
-		public Boolean whiteScanning() {
+		public boolean whiteScanning() {
 			if (pnpGame) {
 				return mGameParams.get(1).equals(Consts.SCANNING);
 			} else {
@@ -101,12 +102,18 @@ public class GameActivity extends Activity {
 		}
 		
 		@JavascriptInterface
-		public Boolean blackScanning() {
+		public boolean blackScanning() {
 			if (pnpGame) {
 				return mGameParams.get(2).equals(Consts.SCANNING);
 			} else {
 				return true;
 			}
+		}
+		
+		@JavascriptInterface
+		public void backButton() {
+
+            startActivity(backbuttonIntent);
 		}
 		
 		@JavascriptInterface
@@ -140,11 +147,8 @@ public class GameActivity extends Activity {
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.game_view);
-
-		webView = (WebView) findViewById(R.id.game_view);
-		webView.getSettings().setJavaScriptEnabled(true);
-		webView.addJavascriptInterface(new Ferry(this), "ferry");
-		webView.loadUrl("file:///android_asset/game/index.html");
+		
+		backbuttonIntent = new Intent(this, Homescreen.class);
 		
 		Intent intent = getIntent();
 		
@@ -157,7 +161,12 @@ public class GameActivity extends Activity {
 			setTitle("Network");
 			pnpGame = false;
 		}
-
+		
+		webView = (WebView) findViewById(R.id.game_view);
+		webView.getSettings().setJavaScriptEnabled(true);
+		webView.addJavascriptInterface(new Ferry(this), "ferry");
+		webView.loadUrl("file:///android_asset/game/index.html");
+		
 	}
 
 	@Override

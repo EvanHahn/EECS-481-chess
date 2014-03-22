@@ -3,7 +3,6 @@ package com.eecs481.chess;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ask.scanninglibrary.ASKActivity;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -23,14 +21,14 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 /**
- * 
+ * The friends list activity.
  * 
  * @author Jake Korona
  */
 public class FriendsActivity extends ASKActivity {
 
    //////////////////////////////////////////////////////////////////////////
-   // Public methods
+   // Activity overrides
    //////////////////////////////////////////////////////////////////////////
 
    @Override
@@ -40,7 +38,7 @@ public class FriendsActivity extends ASKActivity {
 
       m_activityContext = this;
       m_user = ParseUser.getCurrentUser();
-      
+
       mSearchBox = (TextView) findViewById(R.id.searchBox);
       mSearchBox.setText("");
 
@@ -51,7 +49,7 @@ public class FriendsActivity extends ASKActivity {
             final String searchName = mSearchBox.getText().toString();
             if (searchName.isEmpty())
                return;
-            
+
             mSearchBox.setText("");
             searchForUser(searchName);
 
@@ -60,48 +58,62 @@ public class FriendsActivity extends ASKActivity {
       });
 
       ListView friendsListView = (ListView) findViewById(R.id.friendsListView);
+
       mAdapter = new FriendsListAdapter(m_activityContext, friendsListView);
-
       mAdapter.setList(m_friends);
-
       friendsListView.setAdapter(mAdapter);
-      
+
       refreshDisplayedFriends();
 
       friendsListView.setOnItemClickListener(new OnItemClickListener() {
          @Override
-         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {        	 
-		    
-		    String opponent = (String)arg0.getItemAtPosition(position);
-		    ParseObject game = makeNewGame(opponent);
-		    
-		    ArrayList<String> gameParams = Utility.getGameParams(game);
-		    
-		    Intent intent = new Intent(m_activityContext, GameActivity.class);		    		    
-		    intent.putExtra(Consts.GAME_PARAMS, gameParams);
+         public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+            String opponent = (String)arg0.getItemAtPosition(position);
+            if (opponent.isEmpty() || opponent == null)
+               return;
+
+            ParseObject game = makeNewGame(opponent);
+            ArrayList<String> gameParams = Utility.getGameParams(game);
+
+            Intent intent = new Intent(m_activityContext, GameActivity.class);
+            intent.putExtra(Consts.GAME_PARAMS, gameParams);
 
             startActivity(intent);
          }
       });
-
    }
 
    //////////////////////////////////////////////////////////////////////////
    // Non-public methods
    //////////////////////////////////////////////////////////////////////////
-   
+
+   /**
+    * Constructs and saves a new game.
+    * 
+    * @param opponent the opponent's username
+    * @return a new game
+    */
    private ParseObject makeNewGame(final String opponent) {
-	    ParseObject game = new ParseObject(Consts.GAME_OBJECT);
-	    game.put(Consts.P1_FIELD, m_user.getUsername());
-	    game.put(Consts.P2_FIELD, opponent);
-	    game.put(Consts.STATUS_FIELD, m_user.getUsername());
-	    game.put(Consts.CUR_GAME_FIELD, Consts.NEW_BOARD);
-	    game.saveInBackground();
-	    
-	    return game;
+      ParseObject game = new ParseObject(Consts.GAME_OBJECT);
+      game.put(Consts.P1_FIELD, m_user.getUsername());
+      game.put(Consts.P2_FIELD, opponent);
+      game.put(Consts.STATUS_FIELD, m_user.getUsername());
+      game.put(Consts.CUR_GAME_FIELD, Consts.NEW_BOARD);
+      game.saveInBackground();
+
+      return game;
    }
-   
+
+   /**
+    * Searches Parse for a user.
+    * 
+    * @param username the username
+    */
    private void searchForUser(final String username) {
+	   if (username.isEmpty() || username == null)
+		   return;
+	      
 	   if (m_friends.contains(username)) {
 		   makeToast("That person is already your friend!");
 		   return;
@@ -130,24 +142,37 @@ public class FriendsActivity extends ASKActivity {
 	     }
 	   });
    }
-   
+
+   /**
+    * Refreshes the list of friends.
+    */
    private void refreshDisplayedFriends() {
-	    List<String> friends = m_user.getList(Consts.USER_FRIENDS);
-	    m_friends.clear();
-	    m_friends.addAll(friends);
-   		mAdapter.clear();
-   		mAdapter.setList(m_friends);
-   		mAdapter.notifyDataSetChanged();
+      List<String> friends = m_user.getList(Consts.USER_FRIENDS);
+      m_friends.clear();
+      m_friends.addAll(friends);
+      mAdapter.clear();
+      mAdapter.setList(m_friends);
+      mAdapter.notifyDataSetChanged();
    }
 
+   /**
+    * Adds a user to the current user's friends list.
+    * 
+    * @param name the friend's username
+    */
    private void addFriend(String name) {
-		ParseUser user = m_user;
-		user.add(Consts.USER_FRIENDS, name);
-		user.saveInBackground();
+      ParseUser user = m_user;
+      user.add(Consts.USER_FRIENDS, name);
+      user.saveInBackground();
    }
-   
+
+   /**
+    * Constructs a short toast message.
+    * 
+    * @param message the message
+    */
    private void makeToast(String message) {
-	    Toast.makeText(m_activityContext, message, Toast.LENGTH_SHORT).show();
+      Toast.makeText(m_activityContext, message, Toast.LENGTH_SHORT).show();
    }
 
    //////////////////////////////////////////////////////////////////////////
@@ -158,11 +183,14 @@ public class FriendsActivity extends ASKActivity {
    private ASKActivity m_activityContext;
 
    /** The list of the current user's friends. */
-   private List<String> m_friends = Collections.synchronizedList(new ArrayList<String>());
-   
+   private final List<String> m_friends = Collections.synchronizedList(new ArrayList<String>());
+
+   /** The current user. */
    private ParseUser m_user;
-   
+
+   /** The adapter for the list of friends. */
    private FriendsListAdapter mAdapter;
-   
+
+   /** The search box. */
    private TextView mSearchBox;
 }
