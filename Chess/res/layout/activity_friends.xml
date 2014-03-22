@@ -29,12 +29,19 @@
     </LinearLayout>
 
     <view
-        class="ask.scanninglibrary.views.ASKListView"
         android:id="@+id/friendsListView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="356dp"
+        class="ask.scanninglibrary.views.ASKListView"
         android:textColor="@color/games_text_color"
         android:textSize="@dimen/games_text_size" >
+
     </view>
+
+    <Button
+        android:id="@+id/homescreenButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="@string/back_homescreen" />
 
 </LinearLayout>

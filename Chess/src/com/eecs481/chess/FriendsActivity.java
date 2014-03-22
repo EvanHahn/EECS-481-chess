@@ -3,6 +3,7 @@ package com.eecs481.chess;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -14,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ask.scanninglibrary.ASKActivity;
+
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -56,6 +58,14 @@ public class FriendsActivity extends ASKActivity {
             Log.i("FriendsActivity", "Searching for user: " + searchName);
          }
       });
+      
+      Button backButton = (Button) findViewById(R.id.homescreenButton);
+      backButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+             startActivity(new Intent(FriendsActivity.this, Homescreen.class));
+          }
+       });
 
       ListView friendsListView = (ListView) findViewById(R.id.friendsListView);
 

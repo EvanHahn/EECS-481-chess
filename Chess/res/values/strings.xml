@@ -26,5 +26,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
+    <string name="back_homescreen">Back to Home Screen</string>
 
 </resources>
