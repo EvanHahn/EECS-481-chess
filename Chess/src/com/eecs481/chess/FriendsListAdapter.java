@@ -28,55 +28,9 @@ public class FriendsListAdapter extends ASKAdapter<String> {
    //////////////////////////////////////////////////////////////////////////
    // Public methods
    //////////////////////////////////////////////////////////////////////////
-
-//   public FriendsListAdapter(ASKActivity context, int resource, AdapterView<?> view) {
-//      super(context, resource, view);
-//
-//      if (context == null)
-//         throw new IllegalArgumentException("The context must not be null");
-//
-//      m_activityContext = context;
-//      m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-//   }
    
 	public FriendsListAdapter(ASKActivity context, ListView listView) {
 		super(context, R.layout.games_list_row, listView);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			int textViewResourceId, List<String> objects,
-			AdapterView<?> view) {
-		super(context, resource, textViewResourceId, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			List<String> objects, AdapterView<?> view) {
-		super(context, resource, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-
-	public FriendsListAdapter(ASKActivity context, int resource,
-			String[] objects, AdapterView<?> view) {
-		super(context, resource, objects, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			AdapterView<?> view) {
-		super(context, resource, view);
-		m_activityContext = context;
-		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-	}
-	
-	public FriendsListAdapter(ASKActivity context, int resource,
-			int textViewResourceId, String[] objects, AdapterView<?> view) {
-		super(context, resource, textViewResourceId, objects, view);
 		m_activityContext = context;
 		m_inflater = (LayoutInflater) m_activityContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 	}

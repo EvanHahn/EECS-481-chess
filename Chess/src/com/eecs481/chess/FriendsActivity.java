@@ -107,6 +107,11 @@ public class FriendsActivity extends ASKActivity {
 		   return;
 	   }
 	   
+	   if (m_user.getUsername().equals(username)) {
+		   makeToast("Cannot add self as friend!");
+		   return;
+	   }
+	   
 	   ParseQuery<ParseUser> query = ParseUser.getQuery();
 	   query.whereEqualTo("username", username);
 	   query.findInBackground(new FindCallback<ParseUser>() {
