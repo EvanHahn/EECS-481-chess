@@ -21,12 +21,15 @@ if (typeof ferry === 'undefined') {
 		},
 		backButton: function() {},
 		saveBoardState: function() {},
-        whiteScanning: function() {
-            return true;
-        },
-        blackScanning: function() {
-            return false;
-        }
+		whiteScanning: function() {
+			return true;
+		},
+		blackScanning: function() {
+			return false;
+		},
+		shouldClick: function() {
+			return false;
+		}
 	};
 
 }

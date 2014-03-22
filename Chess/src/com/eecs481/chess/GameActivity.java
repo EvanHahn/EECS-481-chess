@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MotionEvent;
+import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
 
@@ -27,9 +29,11 @@ public class GameActivity extends Activity {
 	private class Ferry { // the "bridge" between real Android and JavaScript
 
 		private Context context;
+		public boolean needsToClick;
 
 		Ferry(Context c) {
 			context = c;
+			needsToClick = false;
 		}
 
 		@JavascriptInterface
@@ -112,7 +116,6 @@ public class GameActivity extends Activity {
 		
 		@JavascriptInterface
 		public void backButton() {
-
             startActivity(backbuttonIntent);
 		}
 		
@@ -136,6 +139,13 @@ public class GameActivity extends Activity {
 			  }
 			});
 
+		}
+		
+		@JavascriptInterface
+		public boolean shouldClick() {
+			boolean result = needsToClick;
+			needsToClick = false;
+			return result;
 		}
 
 	}
@@ -162,10 +172,25 @@ public class GameActivity extends Activity {
 			pnpGame = false;
 		}
 		
+		final Ferry ferry = new Ferry(this);
+		
 		webView = (WebView) findViewById(R.id.game_view);
 		webView.getSettings().setJavaScriptEnabled(true);
-		webView.addJavascriptInterface(new Ferry(this), "ferry");
+		webView.addJavascriptInterface(ferry, "ferry");
 		webView.loadUrl("file:///android_asset/game/index.html");
+		
+		webView.requestFocus(View.FOCUS_DOWN);
+        webView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+            	boolean shouldClick = (event.getAction() == MotionEvent.ACTION_UP);
+            	if (shouldClick) {
+            		System.out.println("Triggering a click...");
+            		ferry.needsToClick = true;
+            	}
+				return false;
+            }
+        });
 		
 	}
 

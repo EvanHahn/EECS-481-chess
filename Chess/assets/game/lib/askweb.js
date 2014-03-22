@@ -9,7 +9,7 @@
 
 	var CSS = [
 		'.askweb-overlay {',
-			'position: fixed;',
+			'position: absolute;',
 			'top: 0;',
 			'left: 0;',
 			'width: 100%;',
@@ -54,6 +54,13 @@
 		scan();
 	}
 
+	function handleClick(event) {
+		var target = scanningTargets[scanIndex];
+		event.stopPropagation();
+		$(target).trigger('click'); // TODO: remove jQuery dependency
+		return target;
+	}
+
 	var scanningEnabled = false;
 	function enableScanning() {
 
@@ -64,10 +71,7 @@
 		var overlay = document.createElement('div');
 		overlay.className += 'askweb-overlay';
 
-		overlay.addEventListener(CLICK_EVENT, function(event) {
-			event.stopPropagation();
-			scanningTargets[scanIndex].click();
-		});
+		overlay.addEventListener(CLICK_EVENT, handleClick);
 
 		var css = document.createElement('style');
 		css.innerHTML = CSS;
@@ -115,6 +119,13 @@
 				}
 				restartScanning();
 			});
+		},
+
+		click: function() {
+			var fakeEvent = {
+				stopPropagation: function() {}
+			};
+			return handleClick(fakeEvent);
 		}
 
 	};

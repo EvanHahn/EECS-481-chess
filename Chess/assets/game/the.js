@@ -36,8 +36,7 @@ function showLegalMovesFor(square) {
 }
 
 function removeAllScanning() {
-
-    ask.disable($squares);
+	ask.disable($squares);
 }
 
 function saveGame() {
@@ -154,5 +153,8 @@ $('#back').click(function() {
 
 ask.enable($('#buttons button'));
 
-console.log('WebView started with the following user agent:');
-console.log(navigator.userAgent);
+setInterval(function() {
+	if (ferry.shouldClick()) {
+		ask.click();
+	}
+}, 500);
