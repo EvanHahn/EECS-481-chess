@@ -158,11 +158,13 @@ public class FriendsActivity extends ASKActivity {
     */
    private void refreshDisplayedFriends() {
       List<String> friends = m_user.getList(Consts.USER_FRIENDS);
-      m_friends.clear();
-      m_friends.addAll(friends);
-      mAdapter.clear();
-      mAdapter.setList(m_friends);
-      mAdapter.notifyDataSetChanged();
+      if (friends != null) {
+	      m_friends.clear();
+	      m_friends.addAll(friends);
+	      mAdapter.clear();
+	      mAdapter.setList(m_friends);
+	      mAdapter.notifyDataSetChanged();
+      }
    }
 
    /**
