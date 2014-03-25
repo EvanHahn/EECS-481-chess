@@ -50,6 +50,15 @@
             android:name="com.eecs481.chess.GameSettingsPnp"
             android:label="@string/title_activity_game_settings_pnp" >
         </activity>
+        
+        <service
+            android:name="com.eecs481.softkeyboard.SoftKeyboard"
+            android:permission="android.permission.BIND_INPUT_METHOD">
+            <intent-filter>
+                <action android:name="android.view.InputMethod" />
+            </intent-filter>
+            <meta-data android:name="android.view.im" android:resource="@xml/method" />
+        </service>
     </application>
 
 </manifest>
