@@ -27,9 +27,6 @@ if (typeof ferry === 'undefined') {
 		blackScanning: function() {
 			return false;
 		},
-		shouldClick: function() {
-			return false;
-		}
 	};
 
 }

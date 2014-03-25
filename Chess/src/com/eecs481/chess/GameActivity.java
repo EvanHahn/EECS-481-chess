@@ -140,13 +140,6 @@ public class GameActivity extends Activity {
 			});
 
 		}
-		
-		@JavascriptInterface
-		public boolean shouldClick() {
-			boolean result = needsToClick;
-			needsToClick = false;
-			return result;
-		}
 
 	}
 
@@ -185,8 +178,7 @@ public class GameActivity extends Activity {
             public boolean onTouch(View v, MotionEvent event) {
             	boolean shouldClick = (event.getAction() == MotionEvent.ACTION_UP);
             	if (shouldClick) {
-            		System.out.println("Triggering a click...");
-            		ferry.needsToClick = true;
+            		webView.loadUrl("javascript:ask.click();");
             	}
 				return false;
             }

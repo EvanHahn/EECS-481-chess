@@ -152,9 +152,3 @@ $('#back').click(function() {
 });
 
 ask.enable($('#buttons button'));
-
-setInterval(function() {
-	if (ferry.shouldClick()) {
-		ask.click();
-	}
-}, 500);
