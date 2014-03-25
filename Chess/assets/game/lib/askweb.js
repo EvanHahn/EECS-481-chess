@@ -82,7 +82,7 @@
 	}
 
 	function forEach(elements, fn) {
-		if (jQuery && (elements instanceof jQuery)) {
+		if ((typeof jQuery !== 'undefined') && (elements instanceof jQuery)) {
 			elements.each(function() {
 				fn(this);
 			});
@@ -120,6 +120,13 @@
 				restartScanning();
 			});
 		},
+
+    disableAll: function() {
+      while (scanningTargets.length) {
+        var target = scanningTargets[0];
+        ask.disable(target);
+      }
+    },
 
 		click: function() {
 			var fakeEvent = {

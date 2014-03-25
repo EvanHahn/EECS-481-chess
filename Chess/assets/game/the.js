@@ -1,46 +1,28 @@
 // jshint camelcase: false
 // jshint undef: false
+// jshint quotmark: false
 
-function makeBoardFillScreen() {
-	var boardWidth = Math.min($(window).width(), $(window).height() - $('#bottom-bar').height() - 20);
-	$('#board').css('width', boardWidth);
-	$('#bottom-bar .container').css('width', boardWidth);
+var game;
+var board;
+
+var $squares;
+function updateSquares() {
+  $squares = $('#board div[class^="square-"]');
 }
-makeBoardFillScreen();
+updateSquares();
 
-var game = new Chess(ferry.getBoardState());
-var board = new ChessBoard('board', {
-	position: ferry.getBoardState(),
-	showNotation: false,
-	pieceTheme: 'vendor/chesspieces/{piece}.png',
-	onChange: function() {
-		saveGame();
-		updateStatus();
-		highlightLegalSquares();
-	}
-});
-
-var $squares = $('#board div[class^="square-"]');
 /*var whiteScanning = (game.turn() === 'w' && ferry.whiteScanning());
 var blackScanning = (game.turn() === 'b' && ferry.blackScanning());
 console.log(whiteScanning);
 console.log(blackScanning);*/
 
-function removeLegalMoves() {
-	removeAllScanning();
-}
-
-function showLegalMovesFor(square) {
+function scanOver(square) {
 	var $el = $('#board .square-' + square);
 	ask.enable($el);
 }
 
-function removeAllScanning() {
-	ask.disable($squares);
-}
-
 function saveGame() {
-
+	var boardState = game.fen();
 	var activePlayer;
 	if (game.game_over())
 		activePlayer = 'gameover';
@@ -48,11 +30,7 @@ function saveGame() {
 		activePlayer = ferry.getPlayer1();
 	else
 		activePlayer = ferry.getPlayer2();
-
-	var boardState = game.fen();
-
 	ferry.saveBoardState(activePlayer, boardState);
-
 }
 
 function updateStatus() {
@@ -69,18 +47,14 @@ function updateStatus() {
 		if (game.in_check())
 			status += ' (in check!)';
 	}
-	/*whiteScanning = (game.turn() === 'w' && ferry.whiteScanning());
-    blackScanning = (game.turn() === 'b' && ferry.blackScanning());*/
 	$('#status').text(status);
 }
-updateStatus();
 
 function highlightLegalSquares() {
-	if (ferry.isMyTurn()) { //&& ((game.turn() === 'w' && ferry.whiteScanning()) ||
-                             //(game.turn() === 'b' && ferry.blackScanning()))) {
+  if (ferry.isMyTurn()) {
 		$squares.each(function() {
 			var source = $(this).data('square');
-			if (game.moves({ square: source }).length /*&& (whiteScanning || blackScanning)*/) {
+			if (game.moves({ square: source }).length) {
 				ask.enable(this);
 			} else {
 				ask.disable(this);
@@ -89,7 +63,10 @@ function highlightLegalSquares() {
 	}
 }
 
-highlightLegalSquares();
+var $buttons = $('#buttons button');
+function highlightButtons() {
+  ask.enable($buttons);
+}
 
 $('#board').on('click', function(event) {
 
@@ -107,9 +84,10 @@ $('#board').on('click', function(event) {
 			promotion: 'q' // TODO add UI for this
 		});
 		board.position(game.fen());
-		removeLegalMoves();
 		delete board.currentPiece;
+    ask.disableAll();
 		highlightLegalSquares();
+    highlightButtons();
 
 	} else {
 
@@ -120,10 +98,11 @@ $('#board').on('click', function(event) {
 		if (moves.length === 0) {
 			return;
 		}
-		removeAllScanning();
+		ask.disableAll();
 		ask.enable(squareElement);
 		for (var i = 0; i < moves.length; i ++) {
-			showLegalMovesFor(moves[i].to);
+      var moveSquare = moves[i].to;
+			scanOver(moveSquare);
 		}
 		board.currentPiece = source;
 
@@ -137,18 +116,46 @@ if (ferry.getIsPassAndPlay()) {
 		board.position('start');
 	});
 } else {
-	$('#restart').hide();
+	$('#restart').remove();
 }
 
 $('#flip').click(function() {
 	board.flip();
-	removeAllScanning();
-	$squares = $('#board div[class^="square-"]');
+	ask.disableAll();
+  updateSquares();
 	highlightLegalSquares();
+  highlightButtons();
 });
 
 $('#back').click(function() {
 	ferry.backButton();
 });
 
-ask.enable($('#buttons button'));
+$(document).ready(function() {
+
+  function makeBoardFillScreen() {
+    var boardWidth = Math.min($(window).width(), $(window).height() - $('#bottom-bar').height() - 20);
+    $('#board').css('width', boardWidth);
+    $('#bottom-bar .container').css('width', boardWidth);
+  }
+  makeBoardFillScreen();
+
+  game = new Chess(ferry.getBoardState());
+  board = new ChessBoard('board', {
+    position: ferry.getBoardState(),
+    showNotation: false,
+    pieceTheme: 'vendor/chesspieces/{piece}.png',
+    onChange: function() {
+      saveGame();
+      updateStatus();
+      highlightLegalSquares();
+      highlightButtons();
+    }
+  });
+
+  updateSquares();
+
+  highlightLegalSquares();
+  updateStatus();
+
+});
