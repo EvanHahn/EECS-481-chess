@@ -17,50 +17,50 @@ console.log(whiteScanning);
 console.log(blackScanning);*/
 
 function scanOver(square) {
-	var $el = $('#board .square-' + square);
-	ask.enable($el);
+  var $el = $('#board .square-' + square);
+  ask.enable($el);
 }
 
 function saveGame() {
-	var boardState = game.fen();
-	var activePlayer;
-	if (game.game_over())
-		activePlayer = 'gameover';
-	else if (game.turn() === 'w')
-		activePlayer = ferry.getPlayer1();
-	else
-		activePlayer = ferry.getPlayer2();
-	ferry.saveBoardState(activePlayer, boardState);
+  var boardState = game.fen();
+  var activePlayer;
+  if (game.game_over())
+    activePlayer = 'gameover';
+  else if (game.turn() === 'w')
+    activePlayer = ferry.getPlayer1();
+  else
+    activePlayer = ferry.getPlayer2();
+  ferry.saveBoardState(activePlayer, boardState);
 }
 
 function updateStatus() {
-	var status;
-	var moveColor = 'White';
-	if (game.turn() === 'b')
-		moveColor = 'Black';
-	if (game.in_checkmate()) {
-		status = 'Game over! ' + moveColor + ' is in checkmate';
-	} else if (game.in_draw()) {
-		status = 'Game over! Draw';
-	} else {
-		status = moveColor + "'s turn";
-		if (game.in_check())
-			status += ' (in check!)';
-	}
-	$('#status').text(status);
+  var status;
+  var moveColor = 'White';
+  if (game.turn() === 'b')
+    moveColor = 'Black';
+  if (game.in_checkmate()) {
+    status = 'Game over! ' + moveColor + ' is in checkmate';
+  } else if (game.in_draw()) {
+    status = 'Game over! Draw';
+  } else {
+    status = moveColor + "'s turn";
+    if (game.in_check())
+      status += ' (in check!)';
+  }
+  $('#status').text(status);
 }
 
 function highlightLegalSquares() {
   if (ferry.isMyTurn()) {
-		$squares.each(function() {
-			var source = $(this).data('square');
-			if (game.moves({ square: source }).length) {
-				ask.enable(this);
-			} else {
-				ask.disable(this);
-			}
-		});
-	}
+    $squares.each(function() {
+      var source = $(this).data('square');
+      if (game.moves({ square: source }).length) {
+        ask.enable(this);
+      } else {
+        ask.disable(this);
+      }
+    });
+  }
 }
 
 var $buttons = $('#buttons button');
@@ -70,65 +70,65 @@ function highlightButtons() {
 
 $('#board').on('click', function(event) {
 
-	if (!ferry.isMyTurn())
-		return;
+  if (!ferry.isMyTurn())
+    return;
 
-	var squareElement = event.target;
-	var source = $(squareElement).data('square');
+  var squareElement = event.target;
+  var source = $(squareElement).data('square');
 
-	if (board.currentPiece) {
+  if (board.currentPiece) {
 
-		game.move({
-			from: board.currentPiece,
-			to: source,
-			promotion: 'q' // TODO add UI for this
-		});
-		board.position(game.fen());
-		delete board.currentPiece;
+    game.move({
+      from: board.currentPiece,
+      to: source,
+      promotion: 'q' // TODO add UI for this
+    });
+    board.position(game.fen());
+    delete board.currentPiece;
     ask.disableAll();
-		highlightLegalSquares();
+    highlightLegalSquares();
     highlightButtons();
 
-	} else {
+  } else {
 
-		var moves = game.moves({
-			square: source,
-			verbose: true
-		});
-		if (moves.length === 0) {
-			return;
-		}
-		ask.disableAll();
-		ask.enable(squareElement);
-		for (var i = 0; i < moves.length; i ++) {
+    var moves = game.moves({
+      square: source,
+      verbose: true
+    });
+    if (moves.length === 0) {
+      return;
+    }
+    ask.disableAll();
+    ask.enable(squareElement);
+    for (var i = 0; i < moves.length; i ++) {
       var moveSquare = moves[i].to;
-			scanOver(moveSquare);
-		}
-		board.currentPiece = source;
+      scanOver(moveSquare);
+    }
+    board.currentPiece = source;
 
-	}
+  }
 
 });
 
 if (ferry.getIsPassAndPlay()) {
-	$('#restart').click(function() {
-		game.reset();
-		board.position('start');
-	});
+  $('#restart').click(function() {
+    game.reset();
+    board.position('start');
+  });
 } else {
-	$('#restart').remove();
+  $('#restart').remove();
 }
 
 $('#flip').click(function() {
-	board.flip();
-	ask.disableAll();
+  board.flip();
+  ask.disableAll();
   updateSquares();
-	highlightLegalSquares();
+  highlightLegalSquares();
   highlightButtons();
 });
 
 $('#back').click(function() {
-	ferry.backButton();
+  ferry.backButton();
 });
 
 $(document).ready(function() {
