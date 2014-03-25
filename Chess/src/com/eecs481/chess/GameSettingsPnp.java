@@ -9,6 +9,12 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import ask.scanninglibrary.ASKActivity;
 
+
+
+/*
+ * THIS CLASS IS NOT PART OF THE BETA RELEASE, IT WILL BE USED IN THE FINAL RELEASE
+ */
+
 public class GameSettingsPnp extends ASKActivity {
 
    @Override
@@ -32,7 +38,7 @@ public class GameSettingsPnp extends ASKActivity {
               Intent intent = new Intent(GameSettingsPnp.this, GameActivity.class);
               boolean whiteScan = mWhiteScanCheckBox.isChecked();
               boolean blackScan = mBlackScanCheckBox.isChecked();
-              intent.putExtra(Consts.GAME_PARAMS, Utility.getGameParams(whiteScan, blackScan));
+              //intent.putExtra(Consts.GAME_PARAMS, Utility.getGameParams(whiteScan, blackScan));
         	  startActivity(intent);
           }
        });
