@@ -18,7 +18,6 @@ package com.eecs481.softkeyboard;
 
 import java.util.ArrayList;
 import java.util.List;
-import android.inputmethodservice.InputMethodService;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.text.InputType;
@@ -31,6 +30,8 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
 import android.view.inputmethod.InputMethodSubtype;
+import ask.scanninglibrary.ASKInputMethodService;
+import ask.scanninglibrary.Scannable;
 import com.eecs481.chess.R;
 
 /**
@@ -40,7 +41,7 @@ import com.eecs481.chess.R;
  * a basic example for how you would get started writing an input method, to
  * be fleshed out as appropriate.
  */
-public class SoftKeyboard extends InputMethodService
+public class SoftKeyboard extends ASKInputMethodService
 implements KeyboardView.OnKeyboardActionListener {
    static final boolean DEBUG = false;
 
@@ -102,20 +103,6 @@ implements KeyboardView.OnKeyboardActionListener {
       mQwertyKeyboard = new LatinKeyboard(this, R.xml.qwerty);
       mSymbolsKeyboard = new LatinKeyboard(this, R.xml.symbols);
       mSymbolsShiftedKeyboard = new LatinKeyboard(this, R.xml.symbols_shift);
-   }
-
-   /**
-    * Called by the framework when your view for creating input needs to
-    * be generated.  This will be called the first time your input method
-    * is displayed, and every time it needs to be re-created such as due to
-    * a configuration change.
-    */
-   @Override public View onCreateInputView() {
-      mInputView = (LatinKeyboardView) getLayoutInflater().inflate(
-         R.layout.input, null);
-      mInputView.setOnKeyboardActionListener(this);
-      mInputView.setKeyboard(mQwertyKeyboard);
-      return mInputView;
    }
 
    /**
@@ -698,5 +685,25 @@ implements KeyboardView.OnKeyboardActionListener {
 
    @Override
    public void onRelease(int primaryCode) {
+   }
+
+   /**
+    * Called by the framework when your view for creating input needs to
+    * be generated.  This will be called the first time your input method
+    * is displayed, and every time it needs to be re-created such as due to
+    * a configuration change.
+    */
+   @Override
+   public View createInputView() {
+      mInputView = (LatinKeyboardView) getLayoutInflater().inflate(
+         R.layout.input, null);
+      mInputView.setOnKeyboardActionListener(this);
+      mInputView.setKeyboard(mQwertyKeyboard);
+      return mInputView;
+   }
+
+   @Override
+   public Scannable createCandidateScannable() {
+      return null;
    }
 }
