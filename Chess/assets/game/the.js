@@ -11,6 +11,8 @@ function updateSquares() {
 }
 updateSquares();
 
+var isMyTurn = ferry.isMyTurn();
+
 /*var whiteScanning = (game.turn() === 'w' && ferry.whiteScanning());
 var blackScanning = (game.turn() === 'b' && ferry.blackScanning());
 console.log(whiteScanning);
@@ -51,7 +53,7 @@ function updateStatus() {
 }
 
 function highlightLegalSquares() {
-  if (ferry.isMyTurn()) {
+  if (isMyTurn) {
     $squares.each(function() {
       var source = $(this).data('square');
       if (game.moves({ square: source }).length) {
@@ -70,7 +72,7 @@ function highlightButtons() {
 
 $('#board').on('click', function(event) {
 
-  if (!ferry.isMyTurn())
+  if (!isMyTurn)
     return;
 
   var squareElement = event.target;
@@ -78,14 +80,19 @@ $('#board').on('click', function(event) {
 
   if (board.currentPiece) {
 
-    game.move({
+    var moved = game.move({
       from: board.currentPiece,
       to: source,
       promotion: 'q' // TODO add UI for this
     });
+    if (moved && !ferry.getIsPassAndPlay()) {
+      isMyTurn = false;
+    }
+
     board.position(game.fen());
     delete board.currentPiece;
     ask.disableAll();
+
     highlightLegalSquares();
     highlightButtons();
 
@@ -156,6 +163,7 @@ $(document).ready(function() {
   updateSquares();
 
   highlightLegalSquares();
+  highlightButtons();
   updateStatus();
 
 });
