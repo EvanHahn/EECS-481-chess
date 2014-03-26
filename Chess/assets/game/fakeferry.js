@@ -11,7 +11,7 @@ if (typeof ferry === 'undefined') {
 			return 'USER2';
 		},
 		getIsPassAndPlay: function() {
-			return false;
+			return true;
 		},
 		getBoardState: function() {
 			return 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';

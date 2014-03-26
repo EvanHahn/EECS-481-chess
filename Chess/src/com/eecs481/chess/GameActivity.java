@@ -185,11 +185,16 @@ public class GameActivity extends Activity {
         });
 		
 	}
+	
+	@Override
+	protected void onResume() {
+	   super.onResume();
+	   this.onCreate(null);
+	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.game, menu);
+		this.onCreate(null);
 		return true;
 	}
 
