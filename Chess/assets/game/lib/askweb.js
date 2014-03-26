@@ -16,10 +16,10 @@
 			'height: 100%;',
 		'}',
 		'.askweb-scannable {',
-			'box-shadow: inset 0 0 0 3px #00f !important;',
+      'border: 4px solid #00f !important;',
 		'}',
 		'.askweb-scannable-on {',
-			'box-shadow: inset 0 0 0 3px #0f0 !important;',
+      'border: 4px solid #0f0 !important;',
 		'}'
 	].join('\n');
 

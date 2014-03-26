@@ -166,4 +166,8 @@ $(document).ready(function() {
   highlightButtons();
   updateStatus();
 
+  $('.askweb-overlay').on('click', function() {
+    ask.click();
+  });
+
 });
