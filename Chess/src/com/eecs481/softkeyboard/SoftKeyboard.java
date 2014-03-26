@@ -29,7 +29,6 @@ import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
 import android.view.inputmethod.InputMethodManager;
-import android.view.inputmethod.InputMethodSubtype;
 import ask.scanninglibrary.ASKInputMethodService;
 import ask.scanninglibrary.Scannable;
 import com.eecs481.chess.R;
@@ -81,7 +80,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * Main initialization of the input method component.  Be sure to call
     * to super class.
     */
-   @Override public void onCreate() {
+   @Override
+   public void onCreate() {
       super.onCreate();
       mInputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
       mWordSeparators = getResources().getString(R.string.word_separators);
@@ -91,7 +91,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * This is the point where you can do all of your UI initialization.  It
     * is called after creation and any configuration change.
     */
-   @Override public void onInitializeInterface() {
+   @Override
+   public void onInitializeInterface() {
       if (mQwertyKeyboard != null) {
          // Configuration changes can happen after the keyboard gets recreated,
          // so we need to be able to re-build the keyboards if the available
@@ -109,7 +110,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * Called by the framework when your view for showing candidates needs to
     * be generated, like {@link #onCreateInputView}.
     */
-   @Override public View onCreateCandidatesView() {
+   @Override
+   public View onCreateCandidatesView() {
       mCandidateView = new CandidateView(this);
       mCandidateView.setService(this);
       return mCandidateView;
@@ -121,7 +123,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * bound to the client, and are now receiving all of the detailed information
     * about the target of our edits.
     */
-   @Override public void onStartInput(EditorInfo attribute, boolean restarting) {
+   @Override
+   public void onStartInput(EditorInfo attribute, boolean restarting) {
       super.onStartInput(attribute, restarting);
 
       // Reset our state.  We want to do this even if restarting, because
@@ -212,7 +215,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * This is called when the user is done editing a field.  We can use
     * this to reset our state.
     */
-   @Override public void onFinishInput() {
+   @Override
+   public void onFinishInput() {
       super.onFinishInput();
 
       // Clear current composing text and candidates.
@@ -231,24 +235,11 @@ implements KeyboardView.OnKeyboardActionListener {
       }
    }
 
-   @Override public void onStartInputView(EditorInfo attribute, boolean restarting) {
-      super.onStartInputView(attribute, restarting);
-      // Apply the selected keyboard to the input view.
-      mInputView.setKeyboard(mCurKeyboard);
-      mInputView.closing();
-      final InputMethodSubtype subtype = mInputMethodManager.getCurrentInputMethodSubtype();
-      mInputView.setSubtypeOnSpaceKey(subtype);
-   }
-
-   @Override
-   public void onCurrentInputMethodSubtypeChanged(InputMethodSubtype subtype) {
-      mInputView.setSubtypeOnSpaceKey(subtype);
-   }
-
    /**
     * Deal with the editor reporting movement of its cursor.
     */
-   @Override public void onUpdateSelection(int oldSelStart, int oldSelEnd,
+   @Override
+   public void onUpdateSelection(int oldSelStart, int oldSelEnd,
       int newSelStart, int newSelEnd,
       int candidatesStart, int candidatesEnd) {
       super.onUpdateSelection(oldSelStart, oldSelEnd, newSelStart, newSelEnd,
@@ -273,7 +264,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * to show the completions ourself, since the editor can not be seen
     * in that situation.
     */
-   @Override public void onDisplayCompletions(CompletionInfo[] completions) {
+   @Override
+   public void onDisplayCompletions(CompletionInfo[] completions) {
       if (mCompletionOn) {
          mCompletions = completions;
          if (completions == null) {
@@ -332,7 +324,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * We get first crack at them, and can either resume them or let them
     * continue to the app.
     */
-   @Override public boolean onKeyDown(int keyCode, KeyEvent event) {
+   @Override
+   public boolean onKeyDown(int keyCode, KeyEvent event) {
       switch (keyCode) {
          case KeyEvent.KEYCODE_BACK:
             // The InputMethodService already takes care of the back
@@ -399,7 +392,8 @@ implements KeyboardView.OnKeyboardActionListener {
     * We get first crack at them, and can either resume them or let them
     * continue to the app.
     */
-   @Override public boolean onKeyUp(int keyCode, KeyEvent event) {
+   @Override
+   public boolean onKeyUp(int keyCode, KeyEvent event) {
       // If we want to do transformations on text being entered with a hard
       // keyboard, we need to process the up events to update the meta key
       // state we are tracking.
