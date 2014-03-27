@@ -76,7 +76,7 @@ public class RegisterActivity extends ASKActivity {
 
    @Override
    protected void onRestart() {
-      super.onResume();
+      super.onRestart();
       if (ParseUser.getCurrentUser() != null)
          finish();
       else {
