@@ -3,7 +3,6 @@ package com.eecs481.chess;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import ask.scanninglibrary.ASKActivity;
-
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -58,14 +56,14 @@ public class FriendsActivity extends ASKActivity {
             Log.i("FriendsActivity", "Searching for user: " + searchName);
          }
       });
-      
+
       Button backButton = (Button) findViewById(R.id.homescreenButton);
       backButton.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-             startActivity(new Intent(FriendsActivity.this, Homescreen.class));
-          }
-       });
+         @Override
+         public void onClick(View v) {
+            startActivity(new Intent(FriendsActivity.this, Homescreen.class));
+         }
+      });
 
       ListView friendsListView = (ListView) findViewById(R.id.friendsListView);
 
@@ -111,11 +109,11 @@ public class FriendsActivity extends ASKActivity {
       game.put(Consts.STATUS_FIELD, m_user.getUsername());
       game.put(Consts.CUR_GAME_FIELD, Consts.NEW_BOARD);
       try {
-		game.save();
-	} catch (ParseException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	}
+         game.save();
+      } catch (ParseException e) {
+         // TODO Auto-generated catch block
+         e.printStackTrace();
+      }
 
       return game;
    }
@@ -126,36 +124,37 @@ public class FriendsActivity extends ASKActivity {
     * @param username the username
     */
    private void searchForUser(final String username) {
-	   if (username.isEmpty() || username == null)
-		   return;
-	      
-	   if (m_friends.contains(username)) {
-		   makeToast("That person is already your friend!");
-		   return;
-	   }
-	   
-	   if (m_user.getUsername().equals(username)) {
-		   makeToast("Cannot add self as friend!");
-		   return;
-	   }
-	   
-	   ParseQuery<ParseUser> query = ParseUser.getQuery();
-	   query.whereEqualTo("username", username);
-	   query.findInBackground(new FindCallback<ParseUser>() {
-	     public void done(List<ParseUser> objects, ParseException e) {
-	       if (e == null) {
-	           if (!objects.isEmpty()) {
-	        	   addFriend(objects.get(0).getUsername());
-	        	   refreshDisplayedFriends();
-	        	   makeToast("New friend " + objects.get(0).getUsername() + " added!");
-	           } else {
-	        	   makeToast("No user of that name!");
-	           }
-	       } else {
-	           makeToast("Something went wrong!");
-	       }
-	     }
-	   });
+      if (username.isEmpty() || username == null)
+         return;
+
+      if (m_friends.contains(username)) {
+         makeToast("That person is already your friend!");
+         return;
+      }
+
+      if (m_user.getUsername().equals(username)) {
+         makeToast("Cannot add self as friend!");
+         return;
+      }
+
+      ParseQuery<ParseUser> query = ParseUser.getQuery();
+      query.whereEqualTo("username", username);
+      query.findInBackground(new FindCallback<ParseUser>() {
+         @Override
+         public void done(List<ParseUser> objects, ParseException e) {
+            if (e == null) {
+               if (!objects.isEmpty()) {
+                  addFriend(objects.get(0).getUsername());
+                  refreshDisplayedFriends();
+                  makeToast("New friend " + objects.get(0).getUsername() + " added!");
+               } else {
+                  makeToast("No user of that name!");
+               }
+            } else {
+               makeToast("Something went wrong!");
+            }
+         }
+      });
    }
 
    /**
@@ -164,11 +163,12 @@ public class FriendsActivity extends ASKActivity {
    private void refreshDisplayedFriends() {
       List<String> friends = m_user.getList(Consts.USER_FRIENDS);
       if (friends != null) {
-	      m_friends.clear();
-	      m_friends.addAll(friends);
-	      mAdapter.clear();
-	      mAdapter.setList(m_friends);
-	      mAdapter.notifyDataSetChanged();
+         m_friends.clear();
+         m_friends.addAll(friends);
+         Collections.sort(m_friends);
+         mAdapter.clear();
+         mAdapter.setList(m_friends);
+         mAdapter.notifyDataSetChanged();
       }
    }
 
