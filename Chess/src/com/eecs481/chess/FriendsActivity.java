@@ -19,6 +19,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 /**
  * The friends list activity.
@@ -144,15 +145,15 @@ public class FriendsActivity extends ASKActivity {
          public void done(List<ParseUser> objects, ParseException e) {
             if (e == null) {
                if (!objects.isEmpty()) {
-                  addFriend(objects.get(0).getUsername());
+                  addFriend(objects.get(0));
                   refreshDisplayedFriends();
                   makeToast("New friend " + objects.get(0).getUsername() + " added!");
-               } else {
-                  makeToast("No user of that name!");
                }
-            } else {
-               makeToast("Something went wrong!");
+               else
+                  makeToast("No user of that name!");
             }
+            else
+               makeToast("Something went wrong!");
          }
       });
    }
@@ -166,6 +167,7 @@ public class FriendsActivity extends ASKActivity {
          m_friends.clear();
          m_friends.addAll(friends);
          Collections.sort(m_friends);
+
          mAdapter.clear();
          mAdapter.setList(m_friends);
          mAdapter.notifyDataSetChanged();
@@ -173,14 +175,21 @@ public class FriendsActivity extends ASKActivity {
    }
 
    /**
-    * Adds a user to the current user's friends list.
+    * Adds a user to the current user's friends list and vice versa.
     * 
-    * @param name the friend's username
+    * @param friend the friend to add
     */
-   private void addFriend(String name) {
+   private void addFriend(final ParseUser friend) {
       ParseUser user = m_user;
-      user.add(Consts.USER_FRIENDS, name);
-      user.saveInBackground();
+      user.add(Consts.USER_FRIENDS, friend.getUsername());
+      friend.add(Consts.USER_FRIENDS, m_user.getUsername());
+
+      user.saveInBackground(new SaveCallback() {
+         @Override
+         public void done(ParseException e) {
+            friend.saveInBackground();
+         }
+      });
    }
 
    /**
