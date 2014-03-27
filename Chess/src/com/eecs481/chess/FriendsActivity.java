@@ -110,7 +110,12 @@ public class FriendsActivity extends ASKActivity {
       game.put(Consts.P2_FIELD, opponent);
       game.put(Consts.STATUS_FIELD, m_user.getUsername());
       game.put(Consts.CUR_GAME_FIELD, Consts.NEW_BOARD);
-      game.saveInBackground();
+      try {
+		game.save();
+	} catch (ParseException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
 
       return game;
    }

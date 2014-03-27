@@ -12,6 +12,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.ParseException;
@@ -132,9 +133,15 @@ public class GameActivity extends Activity {
 			query.getInBackground(id, new GetCallback<ParseObject>() {
 			  public void done(ParseObject game, ParseException e) {
 			    if (e == null) {
-			      game.put(Consts.STATUS_FIELD, status);
-			      game.put(Consts.CUR_GAME_FIELD, boardState);
-			      game.saveInBackground();
+			    	if (game == null) {
+			    		makeToast("Game not found!");
+			    		return;
+			    	}
+			    	game.put(Consts.STATUS_FIELD, status);
+			    	game.put(Consts.CUR_GAME_FIELD, boardState);
+			    	game.saveInBackground();
+			    } else {
+			    	makeToast("Parse query exception");
 			    }
 			  }
 			});
@@ -191,6 +198,10 @@ public class GameActivity extends Activity {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.game, menu);
 		return true;
+	}
+	
+	private void makeToast(String message) {
+		Toast.makeText(GameActivity.this, message, Toast.LENGTH_SHORT).show();
 	}
 
 }
