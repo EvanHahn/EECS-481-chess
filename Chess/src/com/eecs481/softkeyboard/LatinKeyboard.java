@@ -19,7 +19,6 @@ package com.eecs481.softkeyboard;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.XmlResourceParser;
-import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.view.inputmethod.EditorInfo;
 import com.eecs481.chess.R;
@@ -83,12 +82,6 @@ public class LatinKeyboard extends Keyboard {
             mEnterKey.icon = res.getDrawable(R.drawable.sym_keyboard_return);
             mEnterKey.label = null;
             break;
-      }
-   }
-
-   void setSpaceIcon(final Drawable icon) {
-      if (mSpaceKey != null) {
-         mSpaceKey.icon = icon;
       }
    }
 

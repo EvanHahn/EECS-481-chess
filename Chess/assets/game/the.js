@@ -132,6 +132,7 @@ $('#flip').click(function() {
   updateSquares();
   highlightLegalSquares();
   highlightButtons();
+  saveGame();
 });
 
 $('#back').click(function() {
