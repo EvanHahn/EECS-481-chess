@@ -162,9 +162,7 @@ public class GameActivity extends Activity {
                }
             }
          });
-
       }
-
    }
 
    @Override
@@ -172,26 +170,22 @@ public class GameActivity extends Activity {
    protected void onCreate(Bundle savedInstanceState) {
 
       super.onCreate(savedInstanceState);
-
       setContentView(R.layout.game_view);
+
+      getActionBar().hide();
 
       backbuttonIntent = new Intent(this, Homescreen.class);
 
-      Intent intent = getIntent();
-
-      mGameParams = intent.getStringArrayListExtra(Consts.GAME_PARAMS);
+      mGameParams = getIntent().getStringArrayListExtra(Consts.GAME_PARAMS);
 
       if (mGameParams.get(0).equals(Consts.PNP)) {
-         setTitle("Pass-and-play");
          pnpGame = true;
 
          SharedPreferences gameState = getSharedPreferences(BOARD_STATE_PREF, 0);
          m_pnpBoardState = gameState.getString("boardState", Consts.NEW_BOARD);
       }
-      else {
-         setTitle("Network");
+      else
          pnpGame = false;
-      }
 
       final Ferry ferry = new Ferry(this);
 
@@ -211,7 +205,6 @@ public class GameActivity extends Activity {
             return false;
          }
       });
-
    }
 
    @Override

@@ -1,7 +1,6 @@
 package com.eecs481.chess;
 
 import java.util.ArrayList;
-
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
@@ -11,7 +10,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import ask.scanninglibrary.ASKActivity;
-
 import com.parse.ParseUser;
 
 /**
@@ -29,6 +27,8 @@ public class Homescreen extends ASKActivity {
       setContentView(R.layout.activity_homescreen);
       setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+      getActionBar().setTitle(String.format("Hello %s!", ParseUser.getCurrentUser().getUsername()));
+
       m_activityContext = this;
       m_gameList = new GameListManager(this);
 
@@ -38,12 +38,12 @@ public class Homescreen extends ASKActivity {
       passPlayButton.setOnClickListener(new View.OnClickListener() {
          @Override
          public void onClick(View v) {
-        	//to be used in the final release 
-        	//Intent intent = new Intent(m_activityContext, GameSettingsPnp.class);
-        	 
+            //to be used in the final release
+            //Intent intent = new Intent(m_activityContext, GameSettingsPnp.class);
+
             ArrayList<String> gameParams = new ArrayList<String>();
             gameParams.add(Consts.PNP);
-            
+
             Intent intent = new Intent(m_activityContext, GameActivity.class);
             intent.putExtra(Consts.GAME_PARAMS, gameParams);
             startActivity(intent);
@@ -56,15 +56,15 @@ public class Homescreen extends ASKActivity {
             startActivity(new Intent(m_activityContext, FriendsActivity.class));
          }
       });
-      
+
       refresh = new Runnable() {
-		@Override
-		public void run() {
-			m_gameList.refreshUserGames();
-			handler.postDelayed(this, delay);
-		}
+         @Override
+         public void run() {
+            m_gameList.refreshUserGames();
+            handler.postDelayed(this, delay);
+         }
       };
-      
+
       //start thread to refresh after delay
       handler.postDelayed(refresh, delay);
    }
@@ -75,11 +75,11 @@ public class Homescreen extends ASKActivity {
       m_gameList.findUserGames();
       handler.postDelayed(refresh, delay);
    }
-   
+
    @Override
    protected void onPause() {
-	   super.onPause();
-	   handler.removeCallbacks(refresh);
+      super.onPause();
+      handler.removeCallbacks(refresh);
    }
 
    @Override
@@ -107,13 +107,13 @@ public class Homescreen extends ASKActivity {
             return super.onOptionsItemSelected(item);
       }
    }
-   
+
    /** The activity. */
    private ASKActivity m_activityContext;
 
    /** Manager for the games list. */
    private GameListManager m_gameList;
-   
+
    private Handler handler = new Handler();
    private Runnable refresh;
    private long delay = 180000; //3 minutes
