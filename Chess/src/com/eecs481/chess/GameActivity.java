@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -205,18 +204,6 @@ public class GameActivity extends Activity {
             return false;
          }
       });
-   }
-
-   @Override
-   protected void onResume() {
-      super.onResume();
-      this.onCreate(null);
-   }
-
-   @Override
-   public boolean onCreateOptionsMenu(Menu menu) {
-      this.onCreate(null);
-      return true;
    }
 
    private void makeToast(String message) {
