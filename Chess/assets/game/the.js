@@ -161,6 +161,8 @@ $(document).ready(function() {
     }
   });
 
+  if(ferry.getCurrentUserColor() === 'black')
+    board.flip();
   updateSquares();
 
   highlightLegalSquares();

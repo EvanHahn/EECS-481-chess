@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.JavascriptInterface;
@@ -161,6 +162,19 @@ public class GameActivity extends Activity {
                }
             }
          });
+      }
+      @JavascriptInterface
+      public String getCurrentUserColor() {
+  		String me = getCurrentUser();
+  		Log.e("GameActivigy-getCurrentUserColor:me ", me);
+  		Log.e("GameActivigy-getCurrentUserColor:player1", getPlayer1());
+  		String str;
+  		if (getPlayer1().equals(me) || pnpGame)
+  			str = "white";
+  		else
+  			str = "black";
+  		Log.e("GameActivigy-getCurrentUserColor:str", str);
+  		return str;
       }
    }
 
