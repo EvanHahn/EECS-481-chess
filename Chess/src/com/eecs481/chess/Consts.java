@@ -32,4 +32,5 @@ public class Consts {
 	
 	//user object properties
 	public static final String USER_FRIENDS = "friends";
+	
 }

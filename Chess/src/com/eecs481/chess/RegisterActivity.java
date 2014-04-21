@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 import ask.scanninglibrary.ASKActivity;
+
 import com.parse.LogInCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
@@ -25,10 +26,14 @@ public class RegisterActivity extends ASKActivity {
    // Public fields
    //////////////////////////////////////////////////////////////////////////
    /** Missing username message text */
-   public static String NO_USERNAME = "You didn't enter a username!";
+   public static final String NO_USERNAME = "You didn't enter a username!";
 
    /** Missing password message text */
-   public static String NO_PASSWORD = "You didn't enter a password!";
+   public static final String NO_PASSWORD = "You didn't enter a password!";
+   
+   public static final Integer MAX_USERNAME = 12;
+   
+   public static final String USERNAME_TOO_LONG = "Usernames must be " + MAX_USERNAME + " Characters or less!";
 
    //////////////////////////////////////////////////////////////////////////
    // Activity Overrides
@@ -106,6 +111,8 @@ public class RegisterActivity extends ASKActivity {
          makeToast(NO_USERNAME);
       else if (password.isEmpty())
          makeToast(NO_PASSWORD);
+      else if (username.length() > MAX_USERNAME)
+    	 makeToast(USERNAME_TOO_LONG);
       else {
          ParseUser user = new ParseUser();
          user.setUsername(username);

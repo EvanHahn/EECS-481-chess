@@ -17,7 +17,14 @@ import com.parse.ParseUser;
 
 
 public class GameListManager {
+	
+	public static final String YOUR_TURN_MSG = "Your Turn";
+	
+	public static final String OPPONENTS_TURN_MSG = "Opponent's Turn";
+	
+	public static final String GAME_FINISHED_MSG = "Game Over";
 
+	
    public GameListManager(final Homescreen homeScreen) {
       mActivity = homeScreen;
       currentUser = ParseUser.getCurrentUser();
@@ -101,7 +108,14 @@ public class GameListManager {
          String player2Name = pObj.getString(Consts.P2_FIELD);
          String gameStatus = pObj.getString(Consts.STATUS_FIELD);
 
-         String displayStatus = (gameStatus.equals(currentUser.getUsername())) ? "Your Turn" : "Opponent's Turn";
+         String displayStatus;
+         if (gameStatus.equals(currentUser.getUsername())) {
+        	 displayStatus = YOUR_TURN_MSG;
+         } else if (gameStatus.equals(Consts.GAME_OVER_STATUS)) {
+        	 displayStatus = GAME_FINISHED_MSG;
+         } else {
+        	 displayStatus = OPPONENTS_TURN_MSG;
+         }
 
          if (player1Name.equals(currentUser.getUsername())) {
             mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, displayStatus));
