@@ -62,7 +62,9 @@ public class Homescreen extends ASKActivity {
           @Override
           public void onClick(View v) {
               ParseUser.logOut();
-              m_activityContext.finish();
+              Intent intent = new Intent(m_activityContext, RegisterActivity.class);
+              intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+              startActivity(intent);
           }
        });
 
