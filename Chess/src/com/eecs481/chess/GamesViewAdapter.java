@@ -1,6 +1,7 @@
 package com.eecs481.chess;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -40,6 +41,10 @@ public class GamesViewAdapter extends ASKAdapter<GameInfo> {
 
       textViewOpponent.setText(getItem(position).opponent);
       textViewStatus.setText(getItem(position).status);
+      if (getItem(position).yourTurn)
+         rowView.setBackgroundColor(Color.GREEN);
+      else
+         rowView.setBackgroundColor(Color.rgb(255, 119, 119));
 
       return rowView;
    }

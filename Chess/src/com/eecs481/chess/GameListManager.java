@@ -106,15 +106,15 @@ public class GameListManager {
 
          if (yourGame) {
             if (yourTurn)
-               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, "White's Turn (You)"));
+               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, "White's Turn (You)", true));
             else
-               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, "Black's Turn (Them)"));
+               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, "Black's Turn (Them)", false));
          }
          else {
             if (yourTurn)
-               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, "Black's Turn (You)"));
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, "Black's Turn (You)", true));
             else
-               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, "White's Turn (Them)"));
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, "White's Turn (Them)", false));
          }
       }
       Collections.sort(mFullList, new StatusComparator());
