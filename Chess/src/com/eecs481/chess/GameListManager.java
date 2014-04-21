@@ -101,12 +101,20 @@ public class GameListManager {
          String player2Name = pObj.getString(Consts.P2_FIELD);
          String gameStatus = pObj.getString(Consts.STATUS_FIELD);
 
-         String displayStatus = (gameStatus.equals(currentUser.getUsername())) ? "Your Turn" : "Opponent's Turn";
+         boolean yourTurn = gameStatus.equals(currentUser.getUsername());
+         boolean yourGame = player1Name.equals(currentUser.getUsername());
 
-         if (player1Name.equals(currentUser.getUsername())) {
-            mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, displayStatus));
-         } else {
-            mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, displayStatus));
+         if (yourGame) {
+            if (yourTurn)
+               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, "White's Turn (You)"));
+            else
+               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, "Black's Turn (Them)"));
+         }
+         else {
+            if (yourTurn)
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, "Black's Turn (You)"));
+            else
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, "White's Turn (Them)"));
          }
       }
       Collections.sort(mFullList, new StatusComparator());
