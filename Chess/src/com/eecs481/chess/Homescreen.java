@@ -34,6 +34,7 @@ public class Homescreen extends ASKActivity {
 
       Button passPlayButton = (Button) findViewById(R.id.passPlayButton);
       Button netPlayButton = (Button) findViewById(R.id.netPlayButton);
+      Button logoutButton = (Button) findViewById(R.id.logoutButton);
 
       passPlayButton.setOnClickListener(new View.OnClickListener() {
          @Override
@@ -56,6 +57,14 @@ public class Homescreen extends ASKActivity {
             startActivity(new Intent(m_activityContext, FriendsActivity.class));
          }
       });
+      
+      logoutButton.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              ParseUser.logOut();
+              m_activityContext.finish();
+          }
+       });
 
       refresh = new Runnable() {
          @Override

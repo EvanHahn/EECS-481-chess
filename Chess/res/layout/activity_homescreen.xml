@@ -28,21 +28,29 @@
 
     <Button
         android:id="@+id/passPlayButton"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_weight="0.06"
         android:text="@string/pass_play"
         android:textColor="@color/games_text_color"
-        android:textSize="@dimen/games_text_size"
-        android:layout_weight="1" />
+        android:textSize="@dimen/games_text_size" />
 
     <Button
         android:id="@+id/netPlayButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_weight="0.90"
         android:text="@string/network_game"
         android:textColor="@color/games_text_color"
-        android:textSize="@dimen/games_text_size"
-        android:layout_weight="1" />
+        android:textSize="@dimen/games_text_size" />
+    
+    <Button
+        android:id="@+id/logoutButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/logout"
+        android:textColor="@color/games_text_color"
+        android:textSize="@dimen/games_text_size" />
 
     </LinearLayout>
 

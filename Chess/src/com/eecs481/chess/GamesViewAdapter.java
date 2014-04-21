@@ -41,6 +41,7 @@ public class GamesViewAdapter extends ASKAdapter<GameInfo> {
 
       textViewOpponent.setText(getItem(position).opponent);
       textViewStatus.setText(getItem(position).status);
+      
       if (getItem(position).yourTurn)
          rowView.setBackgroundColor(Color.GREEN);
       else
