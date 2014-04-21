@@ -18,13 +18,6 @@ import com.parse.ParseUser;
 
 public class GameListManager {
 	
-	public static final String YOUR_TURN_MSG = "Your Turn";
-	
-	public static final String OPPONENTS_TURN_MSG = "Opponent's Turn";
-	
-	public static final String GAME_FINISHED_MSG = "Game Over";
-
-	
    public GameListManager(final Homescreen homeScreen) {
       mActivity = homeScreen;
       currentUser = ParseUser.getCurrentUser();
@@ -108,21 +101,28 @@ public class GameListManager {
          String player2Name = pObj.getString(Consts.P2_FIELD);
          String gameStatus = pObj.getString(Consts.STATUS_FIELD);
 
-         String displayStatus;
-         if (gameStatus.equals(currentUser.getUsername())) {
-        	 displayStatus = YOUR_TURN_MSG;
-         } else if (gameStatus.equals(Consts.GAME_OVER_STATUS)) {
-        	 displayStatus = GAME_FINISHED_MSG;
-         } else {
-        	 displayStatus = OPPONENTS_TURN_MSG;
+		 boolean gameOver = gameStatus.equals(Consts.GAME_OVER_STATUS);
+         boolean yourTurn = gameStatus.equals(currentUser.getUsername());
+         boolean yourGame = player1Name.equals(currentUser.getUsername());
+         
+         if (yourGame) {
+        	if (gameOver)
+        	   mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, GameInfo.GAME_FINISHED_MSG, false));
+            else if (yourTurn)
+               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, GameInfo.YOUR_TURN_WHITE_MSG, true));
+            else
+               mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, GameInfo.OPPONENTS_TURN_BLACK_MSG, false));
          }
-
-         if (player1Name.equals(currentUser.getUsername())) {
-            mFullList.add(new GameInfo(pObj.getObjectId(), player2Name, displayStatus));
-         } else {
-            mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, displayStatus));
+         else {
+            if (gameOver)
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, GameInfo.GAME_FINISHED_MSG, false));
+            else if (yourTurn)
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, GameInfo.YOUR_TURN_BLACK_MSG, true));
+            else
+               mFullList.add(new GameInfo(pObj.getObjectId(), player1Name, GameInfo.OPPONENTS_TURN_WHITE_MSG, false));
          }
       }
+      
       Collections.sort(mFullList, new StatusComparator());
    }
 
